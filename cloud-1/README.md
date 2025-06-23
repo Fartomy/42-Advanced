@@ -1,6 +1,6 @@
 # Cloud1: AWS Üzerinde Otomatik WordPress Kurulumu
 
-## Dil / Language
+## Dil
 
 - [English](README.en.md)
 
