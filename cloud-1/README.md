@@ -1,9 +1,5 @@
 # Cloud1: AWS Üzerinde Otomatik WordPress Kurulumu
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/makbulut1/cloud1)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/makbulut1/cloud1)
-[![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/makbulut1/cloud1/blob/main/LICENSE)
-
 ## Dil / Language
 
 - [Türkçe](README.tr.md)
@@ -37,25 +33,6 @@ Detaylı dokümantasyon için lütfen yukarıdan tercih ettiğiniz dili seçin.
 
 ## Proje Amacı
 Bu proje, AWS üzerinde otomatik olarak WordPress kurulumunu sağlar. Altyapı Terraform ile oluşturulur, yapılandırma ve kurulum Ansible ile yapılır, WordPress ise Docker Compose ile ayağa kaldırılır. Tüm süreç Makefile ile tek komutla yönetilebilir.
-
-## Proje Dizini
-```
-cloud1/
-├── ansible/                # Ansible playbook ve ayarları
-│   ├── wordpress-playbook.yml  # WordPress kurulum playbook'u
-│   ├── ansible.cfg            # Ansible yapılandırması
-│   └── inventory.ini          # Otomatik oluşturulan inventory
-├── terraform/              # Terraform altyapı dosyaları
-│   ├── main.tf             # EC2, Security Group tanımları
-│   ├── .terraform.lock.hcl # Terraform kilit dosyası
-│   └── terraform.tfstate*  # Terraform durum dosyaları
-├── docker-compose.yml      # WordPress, MySQL ve phpMyAdmin servisleri
-├── Makefile                # Tüm süreci yöneten komutlar
-├── .gitignore             # Git tarafından yok sayılacak dosyalar
-├── LICENSE                # MIT Lisans dosyası
-├── CONTRIBUTING.md        # Katkıda bulunma rehberi
-└── README.md              # Bu dosya
-```
 
 ## Özellikler
 - **AWS Altyapısı**: Terraform ile otomatik EC2 ve güvenlik grubu oluşturma
@@ -187,14 +164,3 @@ MYSQL_PORT=3306
    - Token'ın geçerli olduğunu kontrol edin
    - Domain'in doğru yapılandırıldığını kontrol edin
    - IP güncellemesinin başarılı olduğunu kontrol edin
-
-### Yardım Alma
-1. Hata loglarını kontrol edin
-2. Sorun giderme bölümünü inceleyin
-3. Detaylı hata bilgisiyle issue açın
-
-## Katkıda Bulunma
-Katkıda bulunmak için lütfen [CONTRIBUTING.md](CONTRIBUTING.md) dosyasını inceleyin.
-
-## Lisans
-Bu proje MIT lisansı ile lisanslanmıştır. Ayrıntılar için [LICENSE](LICENSE) dosyasına bakınız.
