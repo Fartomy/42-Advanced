@@ -2,7 +2,6 @@
 
 ## Dil / Language
 
-- [Türkçe](README.tr.md)
 - [English](README.en.md)
 
 ## Hızlı Başlangıç
