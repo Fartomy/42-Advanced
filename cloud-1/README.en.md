@@ -1,13 +1,8 @@
 # Cloud1: Automated WordPress Deployment on AWS
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/makbulut1/cloud1)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/makbulut1/cloud1)
-[![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/makbulut1/cloud1/blob/main/LICENSE)
+## Language
 
-## Language / Dil
-
-- [English](README.en.md)
-- [Türkçe](README.tr.md)
+- [Türkçe](README.md)
 
 ## Quick Start
 
@@ -37,25 +32,6 @@ For detailed documentation, please select your preferred language above.
 
 ## Project Purpose
 This project provides automated WordPress deployment on AWS. Infrastructure is created with Terraform, configuration and installation is done with Ansible, and WordPress is deployed with Docker Compose. The entire process can be managed with a single command using Makefile.
-
-## Project Structure
-```
-cloud1/
-├── ansible/                # Ansible playbooks and settings
-│   ├── wordpress-playbook.yml  # WordPress installation playbook
-│   ├── ansible.cfg            # Ansible configuration
-│   └── inventory.ini          # Auto-generated inventory
-├── terraform/              # Terraform infrastructure files
-│   ├── main.tf             # EC2, Security Group definitions
-│   ├── .terraform.lock.hcl # Terraform lock file
-│   └── terraform.tfstate*  # Terraform state files
-├── docker-compose.yml      # WordPress, MySQL and phpMyAdmin services
-├── Makefile                # Commands to manage the entire process
-├── .gitignore             # Files to be ignored by Git
-├── LICENSE                # MIT License file
-├── CONTRIBUTING.md        # Contributing guide
-└── README.md              # This file
-```
 
 ## Features
 - **AWS Infrastructure**: Automatic EC2 and security group creation with Terraform
@@ -187,14 +163,3 @@ MYSQL_PORT=3306
    - Check if token is valid
    - Check if domain is configured correctly
    - Check if IP update was successful
-
-### Getting Help
-1. Check error logs
-2. Review troubleshooting section
-3. Open an issue with detailed error information
-
-## Contributing
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
