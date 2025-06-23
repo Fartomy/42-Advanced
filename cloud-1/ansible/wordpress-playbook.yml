@@ -1,0 +1,133 @@
+- name: Deploy WordPress with Docker
+  hosts: wordpress
+  tasks:
+    - name: Get user home directory
+      set_fact:
+        user_home: "{{ ansible_env.HOME }}"
+
+    - name: Print home directory (Debug)
+      debug:
+        msg: "User home directory is {{ user_home }}"
+
+    - name: Create WordPress directory
+      file:
+        path: "{{ user_home }}/wordpress"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0755'
+
+    - name: Create Nginx directories
+      file:
+        path: "{{ user_home }}/wordpress/nginx/{{ item }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0755'
+      with_items:
+        - conf.d
+        - ssl
+
+    - name: Generate SSL certificate
+      shell: |
+        openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+          -keyout {{ user_home }}/wordpress/nginx/ssl/nginx.key \
+          -out {{ user_home }}/wordpress/nginx/ssl/nginx.crt \
+          -subj "/C=TR/ST=Istanbul/L=Istanbul/O=WordPress/CN=${DUCKDNS_DOMAIN}.duckdns.org"
+      args:
+        executable: /bin/bash
+      environment:
+        DUCKDNS_DOMAIN: "{{ duckdns_domain }}"
+
+    - name: Set proper permissions for SSL certificates
+      file:
+        path: "{{ user_home }}/wordpress/nginx/ssl/{{ item }}"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0600'
+      with_items:
+        - nginx.key
+        - nginx.crt
+
+    - name: Copy Nginx configuration file
+      copy:
+        src: "../nginx/conf.d/default.conf"
+        dest: "{{ user_home }}/wordpress/nginx/conf.d/default.conf"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0644'
+
+    - name: Copy .env file to remote machine
+      copy:
+        src: "../.env"
+        dest: "{{ user_home }}/wordpress/.env"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0644'
+
+    - name: Copy docker-compose.yml file
+      copy:
+        src: "../docker-compose.yml"
+        dest: "{{ user_home }}/wordpress/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0644'
+
+    - name: Start WordPress using Docker Compose
+      shell: docker-compose up --build -d
+      args:
+        chdir: "{{ user_home }}/wordpress"
+
+    - name: Wait for MySQL to be ready
+      shell: |
+        until docker exec mysql mysqladmin ping -h localhost --silent; do
+          echo "Waiting for MySQL to be ready..."
+          sleep 5
+        done
+      args:
+        executable: /bin/bash
+        chdir: "{{ user_home }}/wordpress"
+
+    - name: Get instance public IP
+      shell: curl -s ifconfig.me
+      register: instance_ip
+
+    - name: Export .env file and install WordPress
+      shell: |
+        set -a
+        . .env
+        set +a
+        docker exec wordpress curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+        docker exec wordpress chmod +x wp-cli.phar
+        docker exec wordpress mv wp-cli.phar /usr/local/bin/wp
+        docker exec wordpress wp core install \
+          --url="https://${DUCKDNS_DOMAIN}.duckdns.org" \
+          --title="${WORDPRESS_SITE_TITLE}" \
+          --admin_user="admin" \
+          --admin_password="${WORDPRESS_ADMIN_PASSWORD}" \
+          --admin_email="${WORDPRESS_ADMIN_EMAIL}" \
+          --skip-email \
+          --allow-root
+      args:
+        executable: /bin/bash
+        chdir: "{{ user_home }}/wordpress"
+      environment:
+        WORDPRESS_PORT: "8080"
+        WORDPRESS_SITE_TITLE: "{{ wordpress_site_title | default('My WordPress Site') }}"
+        WORDPRESS_ADMIN_PASSWORD: "{{ wordpress_admin_password | default('admin123') }}"
+        WORDPRESS_ADMIN_EMAIL: "{{ wordpress_admin_email | default('admin@example.com') }}"
+
+    - name: Update DuckDNS with instance IP
+      shell: |
+        set -a
+        . .env
+        set +a
+        curl "https://www.duckdns.org/update?domains=${DUCKDNS_DOMAIN}&token=${DUCKDNS_TOKEN}&ip={{ instance_ip.stdout }}"
+      args:
+        executable: /bin/bash
+        chdir: "{{ user_home }}/wordpress"
+      register: duckdns_response
+
+    - name: Show DuckDNS update response
+      debug:
+        msg: "{{ duckdns_response }}"
