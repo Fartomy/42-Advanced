@@ -1,4 +1,4 @@
-<img src="https://github.com/Fartomy/42-Out-Core/blob/main/libasm/mats/imgs/welder.gif" align="right" height="400">
+<img src="mats/imgs/welder.gif" align="right" height="400">
 
 # En Basitinden Assembly
 
@@ -70,73 +70,73 @@ Neredeyse her konu birbiriyle ilişkili olduğundan sadece yukarıdan aşağıya
 
 ## 🧭 Yol Haritası
 
-1. [CPU Nedir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#one-cpu-nedir)
-   - [Mikro İşlemci Tarihinin Önemli Noktaları](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#mikro-i%CC%87%C5%9Flemci-tarihinin-%C3%B6nemli-noktalar%C4%B1)
-   - [İşlemci Mimarisi Ne Anlama Geliyor?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#i%CC%87%C5%9Flemci-mimarisi-ne-anlama-geliyor)
-   - [Talimat Seti Nedir? Neden Gereklidir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#talimat-seti-nedir-neden-gereklidir)
-   - [Assembly Nedir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#assembly-nedir)
-2. [CPU'da ki Register'lar Nedir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#two-cpuda-ki-registerlar-nedir)
-   - [Genel Amaçlı Register'lar (General Purpose Registers - GPRs)](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#genel-ama%C3%A7l%C4%B1-registerlar-general-purpose-registers---gprs)
-   - [Bazı Genel Amaçlı Register'ların Özel Durumlarına Detaylı Bakış](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#baz%C4%B1-genel-ama%C3%A7l%C4%B1-registerlar%C4%B1n-%C3%B6zel-durumlar%C4%B1na-detayl%C4%B1-bak%C4%B1%C5%9F)
-   - [Segment Register'lar](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#segment-registerlar)
-   - [Diğer](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#di%C4%9Fer)
-   - [Register Terminolojisi ve Önekler](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#register-terminolojisi-ve-%C3%B6nekler)
-     - [Intel 8086 (16-bit)](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#intel-8086-16-bit)
-     - [32-bit Register'lar](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#32-bit-registerlar)
-     - [64-bit Register'lar](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#64-bit-registerlar)
-3. [Yaygın Assembly Talimatları - Section'lar, Direktifler, Etiketler - İşlenenler (Operands)](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#three-yayg%C4%B1n-assembly-talimatlar%C4%B1---sectionlar-direktifler-etiketler---i%CC%87%C5%9Flenenler-operands)
-   - [Yaygın assembly talimatları](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#yayg%C4%B1n-assembly-talimatlar%C4%B1)
-   - [Direktifler](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#direktifler)
-   - [Etiketler](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#etiketler)
-   - [İşlenenler (Operands)](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#i%CC%87%C5%9Flenenler-operands)
-4. [Assembler'lar (Nasm) ve Yazım Şekli - Linkleme ld ve Sıkıştırma - Gömme arc rcs - Obje Dosyaları - Statik (.a uzantılı dosyalar libasm.a gibi) ve Dinamik Kütüphaneler .dll .so - Runtime ve Compile Time - errno - Assembly ve C ile İlişkisel Bağlantı Kurma - -no-pie Flag'i nedir? Dışarıdan Harici Fonksiyon Çağırma (malloc) - .asm ve .s Dosyası](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#four-assemblerlar-nasm-ve-yaz%C4%B1m-%C5%9Fekli---linkleme-ld-ve-s%C4%B1k%C4%B1%C5%9Ft%C4%B1rma---g%C3%B6mme-arc-rcs---obje-dosyalar%C4%B1---statik-a-uzant%C4%B1l%C4%B1-dosyalar-libasma-gibi-ve-dinamik-k%C3%BCt%C3%BCphaneler-dll-so---runtime-ve-compile-time---errno---assembly-ve-c-ile-i%CC%87li%C5%9Fkisel-ba%C4%9Flant%C4%B1-kurma----no-pie-flagi-nedir-d%C4%B1%C5%9Far%C4%B1dan-harici-fonksiyon-%C3%A7a%C4%9F%C4%B1rma-malloc---asm-ve-s-dosyas%C4%B1)
-   - [Assembler Nedir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#assembler-nedir)
-   - [Assembly Dosya Uzantısı Farklılıkları (.s - .asm)](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#assembly-dosya-uzant%C4%B1s%C4%B1-farkl%C4%B1l%C4%B1klar%C4%B1-s---asm)
-   - [Nesne Dosyaları .o Nedir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#nesne-dosyalar%C4%B1-o-nedir)
-   - [Linkleme ld Nedir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#linkleme-ld-nedir)
-   - [.a Dosyası, Statik (.a, .lib vb.) ve Dinamik (.dll, .so vb.) Kütüphaneler, ar rcs komutu, Runtime ve Compile Time](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#a-dosyas%C4%B1-statik-a-lib-vb-ve-dinamik-dll-so-vb-k%C3%BCt%C3%BCphaneler-ar-rcs-komutu-runtime-ve-compile-time)
-   - [Statik ve Dinamik Kütüphaneler](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#statik-ve-dinamik-k%C3%BCt%C3%BCphaneler)
-   - [ar rcs Komutu Nedir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#ar-rcs-komutu-nedir)
-   - [Runtime ve Compile Time nedir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#runtime-ve-compile-time-nedir)
-   - [Assembly ve C dosyaları ile İlişkisel Bağlantı Kurma](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#assembly-ve-c-dosyalar%C4%B1-ile-i%CC%87li%C5%9Fkisel-ba%C4%9Flant%C4%B1-kurma)
-   - [errno nedir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#errno-nedir)
-   - [gcc'de ki -no-pie Seçeneği Nedir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#gccde-ki--no-pie-se%C3%A7ene%C4%9Fi-nedir)
-5. [Diğer Terim ve Kavramlar ve Sorular ve İfadeler](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#five-di%C4%9Fer-terim-ve-kavramlar-ve-sorular-ve-i%CC%87fadeler)
-   - [errno](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#errno)
-   - [PIE (Position Independent Executable)](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#pie-position-independent-executable)
-   - [GCC Relocation Hatası](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#gcc-relocation-hatas%C4%B1)
-   - [GOT (Global Offset Table)](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#got-global-offset-table)
-   - [ranlib](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#ranlib)
-   - [GCC (-L. -lasm Flags)](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#gcc--l--lasm-flags)
-   - [-no-pie Flag’i ve WRT ..plt İlişkisi](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#-no-pie-flagi-ve-wrt-plt-i%CC%87li%C5%9Fkisi)
-   - [WRT (With Respect To) ..plt](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#wrt-with-respect-to-plt)
-   - [Terimlerin İlişkileri](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#terimlerin-i%CC%87li%C5%9Fkileri)
-   - [x86-64 Linux'ta 32-bit mutlak adreslere artık izin verilmiyor mu?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#x86-64-linuxta-32-bit-mutlak-adreslere-art%C4%B1k-izin-verilmiyor-mu)
-   - [Register'lar ile ilgili bir bilgi](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#registerlar-ile-ilgili-bir-bilgi)
-   - [cmp, jmp vb. flags Detayları](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#cmp-jmp-vb-flags-detaylar%C4%B1)
-   - [call ve jmp, jne, jz vb. Program Akışı Kontrol Komutlarının Birbirlerinden Farkları](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#call-ve-jmp-jne-jz-vb-program-ak%C4%B1%C5%9F%C4%B1-kontrol-komutlar%C4%B1n%C4%B1n-birbirlerinden-farklar%C4%B1)
-   - [Assembly'de strcmp Gibi Bir Fonksiyon Yazarken Fonksiyon Parametrelerin İşaretçilerini (Parametre Geçişlerini, Çağrı Konvansiyonlarını (Calling Convantions)) Nereden/Nasıl Biliyoruz?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#assemblyde-strcmp-gibi-bir-fonksiyon-yazarken-fonksiyon-parametrelerin-i%CC%87%C5%9Faret%C3%A7ilerini-parametre-ge%C3%A7i%C5%9Flerini-%C3%A7a%C4%9Fr%C4%B1-konvansiyonlar%C4%B1n%C4%B1-calling-convantions-neredennas%C4%B1l-biliyoruz)
-   - [al, bl, cl vb. 8-bitlik Register'ların char (orn: 'S' gibi) Tek Bytle'lık Değer Tutma Kabiliyeti](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#al-bl-cl-vb-8-bitlik-registerlar%C4%B1n-char-orn-s-gibi-tek-bytlel%C4%B1k-de%C4%9Fer-tutma-kabiliyeti)
-   - [Neden al, bl, cl vb. yerine ah, bh, ch Kullanılamıyor?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#neden-al-bl-cl-vb-yerine-ah-bh-ch-kullan%C4%B1lam%C4%B1yor)
-   - [rex prefix'i (Öneki)](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#rex-prefixi-%C3%B6neki)
-   - [movzx ve movsx Gibi Talitmatların İşlevleri](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#movzx-ve-movsx-gibi-talitmatlar%C4%B1n-i%CC%87%C5%9Flevleri)
-   - [Assembly'de Signed ve Unsigned](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#assemblyde-signed-ve-unsigned)
-   - [Assembly'de malloc Çağrısı Yapıldığında Arkaplanda ki Değişimler](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#assemblyde-malloc-%C3%A7a%C4%9Fr%C4%B1s%C4%B1-yap%C4%B1ld%C4%B1%C4%9F%C4%B1nda-arkaplanda-ki-de%C4%9Fi%C5%9Fimler)
-   - [PLT Prosedür Tablosu Aracılığıyla malloc Çağrısı](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#plt-prosed%C3%BCr-tablosu-arac%C4%B1l%C4%B1%C4%9F%C4%B1yla-malloc-%C3%A7a%C4%9Fr%C4%B1s%C4%B1)
-   - [Assembly'de Debug (Hata Ayıklama) Nasıl Yapılabilir?](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#assemblyde-debug-hata-ay%C4%B1klama-nas%C4%B1l-yap%C4%B1labilir)
-6. [Kaynaklar](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#six-kaynaklar)
-   - [CPU](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#cpu)
-   - [Register](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#register)
-   - [Sistem Çağrı Numaraları Tablosu](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#sistem-%C3%A7a%C4%9Fr%C4%B1-numaralar%C4%B1-tablosu)
-   - [NASM ve ASM](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#nasm-ve-asm)
-   - [Calling Conventions & ABI](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#calling-conventions--abi)
-   - [Mix](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#mix)
-   - [Konuyla Alakasız](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#konuyla-alakas%C4%B1z)
-   - [ASM Debug](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#asm-debug)
-7. [Onaylama ve Akran Değerlendirmesi](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#seven-onaylama-ve-akran-de%C4%9Ferlendirmesi)
-8. [Ekler](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#eight-ekler)
-   - [Linux System Call Table For x86-64](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#linux-system-call-table-for-x86-64)
-   - [Macos System Call Table](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/README.md#macos-system-call-table)
+1. [CPU Nedir?](#one-cpu-nedir)
+   - [Mikro İşlemci Tarihinin Önemli Noktaları](#mikro-i%CC%87%C5%9Flemci-tarihinin-%C3%B6nemli-noktalar%C4%B1)
+   - [İşlemci Mimarisi Ne Anlama Geliyor?](#i%CC%87%C5%9Flemci-mimarisi-ne-anlama-geliyor)
+   - [Talimat Seti Nedir? Neden Gereklidir?](#talimat-seti-nedir-neden-gereklidir)
+   - [Assembly Nedir?](#assembly-nedir)
+2. [CPU'da ki Register'lar Nedir?](#two-cpuda-ki-registerlar-nedir)
+   - [Genel Amaçlı Register'lar (General Purpose Registers - GPRs)](#genel-ama%C3%A7l%C4%B1-registerlar-general-purpose-registers---gprs)
+   - [Bazı Genel Amaçlı Register'ların Özel Durumlarına Detaylı Bakış](#baz%C4%B1-genel-ama%C3%A7l%C4%B1-registerlar%C4%B1n-%C3%B6zel-durumlar%C4%B1na-detayl%C4%B1-bak%C4%B1%C5%9F)
+   - [Segment Register'lar](#segment-registerlar)
+   - [Diğer](#di%C4%9Fer)
+   - [Register Terminolojisi ve Önekler](#register-terminolojisi-ve-%C3%B6nekler)
+     - [Intel 8086 (16-bit)](#intel-8086-16-bit)
+     - [32-bit Register'lar](#32-bit-registerlar)
+     - [64-bit Register'lar](#64-bit-registerlar)
+3. [Yaygın Assembly Talimatları - Section'lar, Direktifler, Etiketler - İşlenenler (Operands)](#three-yayg%C4%B1n-assembly-talimatlar%C4%B1---sectionlar-direktifler-etiketler---i%CC%87%C5%9Flenenler-operands)
+   - [Yaygın assembly talimatları](#yayg%C4%B1n-assembly-talimatlar%C4%B1)
+   - [Direktifler](#direktifler)
+   - [Etiketler](#etiketler)
+   - [İşlenenler (Operands)](#i%CC%87%C5%9Flenenler-operands)
+4. [Assembler'lar (Nasm) ve Yazım Şekli - Linkleme ld ve Sıkıştırma - Gömme arc rcs - Obje Dosyaları - Statik (.a uzantılı dosyalar libasm.a gibi) ve Dinamik Kütüphaneler .dll .so - Runtime ve Compile Time - errno - Assembly ve C ile İlişkisel Bağlantı Kurma - -no-pie Flag'i nedir? Dışarıdan Harici Fonksiyon Çağırma (malloc) - .asm ve .s Dosyası](#four-assemblerlar-nasm-ve-yaz%C4%B1m-%C5%9Fekli---linkleme-ld-ve-s%C4%B1k%C4%B1%C5%9Ft%C4%B1rma---g%C3%B6mme-arc-rcs---obje-dosyalar%C4%B1---statik-a-uzant%C4%B1l%C4%B1-dosyalar-libasma-gibi-ve-dinamik-k%C3%BCt%C3%BCphaneler-dll-so---runtime-ve-compile-time---errno---assembly-ve-c-ile-i%CC%87li%C5%9Fkisel-ba%C4%9Flant%C4%B1-kurma----no-pie-flagi-nedir-d%C4%B1%C5%9Far%C4%B1dan-harici-fonksiyon-%C3%A7a%C4%9F%C4%B1rma-malloc---asm-ve-s-dosyas%C4%B1)
+   - [Assembler Nedir?](#assembler-nedir)
+   - [Assembly Dosya Uzantısı Farklılıkları (.s - .asm)](#assembly-dosya-uzant%C4%B1s%C4%B1-farkl%C4%B1l%C4%B1klar%C4%B1-s---asm)
+   - [Nesne Dosyaları .o Nedir?](#nesne-dosyalar%C4%B1-o-nedir)
+   - [Linkleme ld Nedir?](#linkleme-ld-nedir)
+   - [.a Dosyası, Statik (.a, .lib vb.) ve Dinamik (.dll, .so vb.) Kütüphaneler, ar rcs komutu, Runtime ve Compile Time](#a-dosyas%C4%B1-statik-a-lib-vb-ve-dinamik-dll-so-vb-k%C3%BCt%C3%BCphaneler-ar-rcs-komutu-runtime-ve-compile-time)
+   - [Statik ve Dinamik Kütüphaneler](#statik-ve-dinamik-k%C3%BCt%C3%BCphaneler)
+   - [ar rcs Komutu Nedir?](#ar-rcs-komutu-nedir)
+   - [Runtime ve Compile Time nedir?](#runtime-ve-compile-time-nedir)
+   - [Assembly ve C dosyaları ile İlişkisel Bağlantı Kurma](#assembly-ve-c-dosyalar%C4%B1-ile-i%CC%87li%C5%9Fkisel-ba%C4%9Flant%C4%B1-kurma)
+   - [errno nedir?](#errno-nedir)
+   - [gcc'de ki -no-pie Seçeneği Nedir?](#gccde-ki--no-pie-se%C3%A7ene%C4%9Fi-nedir)
+5. [Diğer Terim ve Kavramlar ve Sorular ve İfadeler](#five-di%C4%9Fer-terim-ve-kavramlar-ve-sorular-ve-i%CC%87fadeler)
+   - [errno](#errno)
+   - [PIE (Position Independent Executable)](#pie-position-independent-executable)
+   - [GCC Relocation Hatası](#gcc-relocation-hatas%C4%B1)
+   - [GOT (Global Offset Table)](#got-global-offset-table)
+   - [ranlib](#ranlib)
+   - [GCC (-L. -lasm Flags)](#gcc--l--lasm-flags)
+   - [-no-pie Flag’i ve WRT ..plt İlişkisi](#-no-pie-flagi-ve-wrt-plt-i%CC%87li%C5%9Fkisi)
+   - [WRT (With Respect To) ..plt](#wrt-with-respect-to-plt)
+   - [Terimlerin İlişkileri](#terimlerin-i%CC%87li%C5%9Fkileri)
+   - [x86-64 Linux'ta 32-bit mutlak adreslere artık izin verilmiyor mu?](#x86-64-linuxta-32-bit-mutlak-adreslere-art%C4%B1k-izin-verilmiyor-mu)
+   - [Register'lar ile ilgili bir bilgi](#registerlar-ile-ilgili-bir-bilgi)
+   - [cmp, jmp vb. flags Detayları](#cmp-jmp-vb-flags-detaylar%C4%B1)
+   - [call ve jmp, jne, jz vb. Program Akışı Kontrol Komutlarının Birbirlerinden Farkları](#call-ve-jmp-jne-jz-vb-program-ak%C4%B1%C5%9F%C4%B1-kontrol-komutlar%C4%B1n%C4%B1n-birbirlerinden-farklar%C4%B1)
+   - [Assembly'de strcmp Gibi Bir Fonksiyon Yazarken Fonksiyon Parametrelerin İşaretçilerini (Parametre Geçişlerini, Çağrı Konvansiyonlarını (Calling Convantions)) Nereden/Nasıl Biliyoruz?](#assemblyde-strcmp-gibi-bir-fonksiyon-yazarken-fonksiyon-parametrelerin-i%CC%87%C5%9Faret%C3%A7ilerini-parametre-ge%C3%A7i%C5%9Flerini-%C3%A7a%C4%9Fr%C4%B1-konvansiyonlar%C4%B1n%C4%B1-calling-convantions-neredennas%C4%B1l-biliyoruz)
+   - [al, bl, cl vb. 8-bitlik Register'ların char (orn: 'S' gibi) Tek Bytle'lık Değer Tutma Kabiliyeti](#al-bl-cl-vb-8-bitlik-registerlar%C4%B1n-char-orn-s-gibi-tek-bytlel%C4%B1k-de%C4%9Fer-tutma-kabiliyeti)
+   - [Neden al, bl, cl vb. yerine ah, bh, ch Kullanılamıyor?](#neden-al-bl-cl-vb-yerine-ah-bh-ch-kullan%C4%B1lam%C4%B1yor)
+   - [rex prefix'i (Öneki)](#rex-prefixi-%C3%B6neki)
+   - [movzx ve movsx Gibi Talitmatların İşlevleri](#movzx-ve-movsx-gibi-talitmatlar%C4%B1n-i%CC%87%C5%9Flevleri)
+   - [Assembly'de Signed ve Unsigned](#assemblyde-signed-ve-unsigned)
+   - [Assembly'de malloc Çağrısı Yapıldığında Arkaplanda ki Değişimler](#assemblyde-malloc-%C3%A7a%C4%9Fr%C4%B1s%C4%B1-yap%C4%B1ld%C4%B1%C4%9F%C4%B1nda-arkaplanda-ki-de%C4%9Fi%C5%9Fimler)
+   - [PLT Prosedür Tablosu Aracılığıyla malloc Çağrısı](#plt-prosed%C3%BCr-tablosu-arac%C4%B1l%C4%B1%C4%9F%C4%B1yla-malloc-%C3%A7a%C4%9Fr%C4%B1s%C4%B1)
+   - [Assembly'de Debug (Hata Ayıklama) Nasıl Yapılabilir?](#assemblyde-debug-hata-ay%C4%B1klama-nas%C4%B1l-yap%C4%B1labilir)
+6. [Kaynaklar](#six-kaynaklar)
+   - [CPU](#cpu)
+   - [Register](#register)
+   - [Sistem Çağrı Numaraları Tablosu](#sistem-%C3%A7a%C4%9Fr%C4%B1-numaralar%C4%B1-tablosu)
+   - [NASM ve ASM](#nasm-ve-asm)
+   - [Calling Conventions & ABI](#calling-conventions--abi)
+   - [Mix](#mix)
+   - [Konuyla Alakasız](#konuyla-alakas%C4%B1z)
+   - [ASM Debug](#asm-debug)
+7. [Onaylama ve Akran Değerlendirmesi](#seven-onaylama-ve-akran-de%C4%9Ferlendirmesi)
+8. [Ekler](#eight-ekler)
+   - [Linux System Call Table For x86-64](#linux-system-call-table-for-x86-64)
+   - [Macos System Call Table](#macos-system-call-table)
 
 ---
 
@@ -1360,37 +1360,37 @@ r15             | r15d          | r15w          | r15b
 
 **64-bit:**
 
-![x86-64-registers](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/mats/imgs/x86-64-registers.png)
+![x86-64-registers](mats/imgs/x86-64-registers.png)
 
 **32-bit:**
 
-![x86-32-registers](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/mats/imgs/32-bit-registers.png)
+![x86-32-registers](mats/imgs/32-bit-registers.png)
 	
 **16-bit:**
 
-![x86-16-registers](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/mats/imgs/16-bit-registers.png)
+![x86-16-registers](mats/imgs/16-bit-registers.png)
 
 **8-bit:**
 
-![x86-8-registers](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/mats/imgs/8-bit-registers.png)
+![x86-8-registers](mats/imgs/8-bit-registers.png)
 
 **Genel Göürünüm:**
 
-![rdx](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/mats/imgs/rdx.png)
+![rdx](mats/imgs/rdx.png)
 
-![Table of x86 Registers](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/mats/imgs/Table_of_x86_Registers_svg.svg.png)
+![Table of x86 Registers](mats/imgs/Table_of_x86_Registers_svg.svg.png)
 
 ---
 
 ## :three: Yaygın Assembly Talimatları - Section'lar, Direktifler, Etiketler - İşlenenler (Operands)
 
-![nasmstructure](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/mats/imgs/nasmstructure.png)
+![nasmstructure](mats/imgs/nasmstructure.png)
 
 ### Yaygın assembly talimatları
 
 Assembly dilinde, özellikle x86-64 gibi mimarilerde yaygın olarak kullanılan talimatlar (instructions), bellek erişimi, aritmetik işlemler, mantıksal işlemler, kontrol akışı, veri hareketi ve fonksiyon çağrıları gibi temel işlemleri kapsar. Assembly'de çok fazla talimat olduğundan en çok kullanılanlara değinmek daha makul olacaktır:
 
-![talimatlar](https://github.com/Fartomy/42-Out-Core/blob/main/libasm/mats/imgs/talimatlar.png)
+![talimatlar](mats/imgs/talimatlar.png)
 
 1. **Veri Hareketi (Data Movement) Talimatları**
 
