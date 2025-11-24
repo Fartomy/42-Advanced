@@ -6,7 +6,12 @@ Eğer bir kimse Linux işletim sisteminden bahsediyorsa aslında bu anılan şey
 Bu not bir hayli uzun olacaktır. Bunun sebebi konunun inanılmaz ölçüde hem **soyutlama** içermesi hem **deterministik** yapı da olması hem de **bağımlılığın** artık cılkının çıkarılmasındandır. Aslında bu üç faktörün her biri birbirinin sebebidir. Konunun **deterministik** yapı da olmasının sebebi her bir öğenin başka bir öğeye bağımlı ve nedeni olmasıdır. Öğelerin birbilerine bağımlı olmasının sebebi ve gereği **bağımlılıklar** bütününün düzenli (deterministik) çalışan bir yapı ihtiva etmesidir. Ve bağımlılıklardan meydana gelen bu yapı beraberinde soyutlamayı da içerir. Çünkü yeni bir öğe meydana gelmiştir ve bu öğe evvelinde düzenli gözüken bağımlılık karmaşasını **soyutlayarak** bütünün kendisini oluşturur. Örneğin konuyla alakalı herhangi bir soru soralım; "Neden sistem bileşenleri (araçlar (bash, cp, mv) ve kütüphaneler (glibc)) uygun konumlarına yüklenmelidir?" Bunun cevabını öğrenmeden bileşenlerin uygun konumlarına yerleştirilmesi gerektiği dogması sorgusuz kabullenilebilir. Ancak cevap vermek gerektiğinde uygun konumların neler olduklarının tespiti yapılabilir örneğin `/usr`, `/bin`, `/sbin`, `/lib` vb. ardından bunların ne oldukları, neden bu kategorilerin yapıldığını, tarihsel olarak bu dizinlerin nasıl evrildiği,  bu kategorilerin neden standartlaştırılmak istendiği,  içlerinde ne barındırıldığı, içlerinde nelerin barındırılması gerektiği, barındırılan içeriklerin sistem içerisinde ki davranışlarının nasıl olması gerektiği, bu davranışların neden standartlaştırılmak istendiği gibi konunun bir parçasının aslında pek çok nedene yani parçaya dayandığını ve bu yüzden de soyutlamanın bir noktadan sonra kompleks nedenleri basitleştirebilmek için gerekli bir olgu olduğunun farkına varılabilir. Aksi taktirde derine inildikçe inilir ve konu için sorulan sorudan sapılabilir. Ancak bu sapma da konuyu genişlemesine daha iyi kavrayabilmek için bir nokta da gereklidir. Bu yüzden buradan çıkarım olarak soyutlamanın öğrenmeye etkisinin hem yararlı hem de zararlı olduğu söylenebilir. Ayrıca deterministik ve bağımlılık içerikli yapıların da en büyük zaafı sistemi meydana getiren bir parçanın noksanlığında yapının tümden meydana gelememesidir. Bir yapının arzu edilen biçimde çalışması beklendiğinde ve sistemi meydana getirecek olan en ufak bir parçanın eksikliğinde bunun mümkün kılınamayacağı bilinmelidir. Bu yüzden bir parça ne kadar ufak öğelerden meydana geliyorsa o kadar hassaslaşır ve bekleneni gerçekleştirebilmesi yine o kadar hassaslaşır.
 
 ## İçindekiler
-_İçindekiler Kısmı_
+1. [İşletim Sistemi](#işletim-sistemi)
+2. [Kernel](#kernel)
+3. [LFS](#lfs)
+4. [ft_linux Süreci](#ft_linux-süreci)
+5. [Proje ile Paralel Bağıntısı Olabilir Konular](#proje-ile-paralel-bağıntısı-olabilir-konular)
+6. [Kaynaklar](#kaynaklar)
 
 ## İşletim Sistemi
 İlk defa içerisinde işletim sistemi barındıran bir bilgisayar ile tanışan bir kimse işletim sistemini bilgisayar ile özdeşleştirebilir ve bilgisayara benzeyen bir şey gördüğünde ve çalıştırdığında beklentisi daha önce görmüş olduğu işletim sistemi olabilir. Bu normaldir çünkü işletim sistemi ardında çalıştırdığı onca şeyi öyle bir soyutlar ki neredeyse somut bir hal alarak bir kimsenin onu "bilgisayar ile özdeşleştirilebilir" zannetme potansiyelitesini açığa çıkarır. Hal böyle olduğunda artık `bilgisayar = işletim sistemi`olur. Ancak "bilgisayar makinesi" kavramı başkadır. "İşletim sistemi programı" kavramı başkadır. İşletim sistemi temelde iki parçadan meydana gelir; **kernel (linux, bsd, vb.) + userspace (bash, ls, cp, mv vb.)**. Bunlar bilgisayarların evrimleşme süreci tarihine bakılarak veya işletim sistemlerinin evrimleşme tarihine bakılarak anlaşılabilir.
@@ -4214,11 +4219,14 @@ Bu dosyanın birkaç önemli kullanım amacı vardır:
 - [FHS](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html)
 - [LSB](https://refspecs.linuxfoundation.org/lsb.shtml)
 - [GNU Autotools](https://www.gnu.org/software/automake/manual/html_node/index.html#SEC_Contents)
-  [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/)
+- [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/)
 - [Mini-Linux](https://www.youtube.com/watch?v=QlzoegSuIzg)
 - [VirtualBox Format Converting](https://superuser.com/questions/554862/how-to-convert-img-to-usable-virtualbox-format)
 - Claude Sohbetleri
 - ChatGPT Sohbetleri
+
+<img src="mats/idk2.jpg" align="right" height="486">
+<img src="mats/idk1.jpg" align="left" height="486">
 
 
 
