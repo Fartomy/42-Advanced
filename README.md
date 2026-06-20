@@ -1,1 +1,1 @@
-# Ecole 42 Out Core Projects
+# Ecole 42 Advanced Projects
