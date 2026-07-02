@@ -2,9 +2,9 @@
 
 <img src="spiderweb.gif" align="right" height="500">
 
-Bu proje de bir veri merkezi ağ altyapısının nasıl tasarlanması gerektiğinin temel pratik uygulamaları GNS3 programı ile simüle edilerek kurgu edilmesi istenmektedir. Aslında daha çok emüle etmek denilebilir. Bu sayede ağ yöneticiliği dünyası hakkında teorik olarak pek çok kavram ve yenilik edinilmiş olacak ve ayrıca pratik olarak da pek çok teknik ve çözümsel yaklaşımlar ile yeni perspektifler edinilmiş olacaktır. Teorik olarak internetin nasıl çalıştığı, özerk sistemlerin (AS) ne olduğu, ağ cihazlarının ne olduğu ve birbirleri ile olan etkileşimleri vb. örnekler verilebilir. Aynı şekilde az önce sıralanan edinimlerin pratik açıdan teknik anlam da arkaplan da nasıl çalıştığı ve nasıl dizayn edilmesi gerektiğinin öğrenilmesi hedeflenmektedir. Ancak ne olursa olsun teknik anlamda veri merkezlerinde oluşan sorunlar bizzat ve doğrudan yaşanılmadıkça bu sorunlar üzerine geliştirilen BGP EVPN, VLAN, VXLAN, VPLS, MPLS vb. teknik yaklaşımlarının tam anlamıyla anlaşılmasının zor olduğu kanaatindeyim. Bu yaklaşımlar ağ mühendisleri tarafından belirli sorunların üstesinden gelinmek amacıyla düşünülmüş ve geliştirilmiş tekniklerdir. Bu yüzden bu projenin bu tekniklerin nasıl kullanılması gerektiğini değil belirli sorunlar yaşanıldığında bu sorunların nasıl üstesinden gelinmesi gerektiğinin edinimini öğretmeyi hedeflemesi gerektiği kanaatindeyim. Bu model daha mühendissel/tekniker bir bakış açısı edinimi sağlayabilirdi. Ancak tabii bunun için bizzat saha da olmak gerekli ve bu mümkün olamadığından belki de bu proje bu kadarını bizlere sunmuştur. Bunların yanı sıra ağ kavramları çok soyut kavramlar olduğundan öğrenildiğini düşünülen şey bir anda farklı bir bağlam da çok farklı biçim de ele alınabilir. Bu da öğrenildiğini düşünülen şey hakkında gerçekten öğrenilip öğrenilmediğine dair şüpheler oluşturabilir. Bunu izah etmek gerekirse; Multicast'i üçgen olarak öğrendiğinizi varsayın (Multicast = üçgen). Ancak Multicast'i farklı bir bağlam da ele aldığınız da aslında Multicast'in kare olduğunu öğreniyorsunuz. Daha sonra yine farklı bir bağlam da ele aldığınızda aslında Multicast yıldızmış. Tüm bunlar fark edildiğinde Multicast'in bağlamsal duruma göre hem teknik hem de ifadesel olarak esnek bir kavram olduğu sonucuna varabilirsiniz. Bu C'de pointer öğrendiğinizi zannetmenize örnek verilebilir :d. Farklı bir kimseden pointer konusunu dinlediğinizde zihninizde ki kavramla örtüşmediğini ancak pointer'ı anlatan kimsenin de çok tutarlı bir şekilde izahat de bulunduğunu fark edip hangisinin doğru olduğunun sorgulamasına düşebilirsiniz. Bu hem siz hem de diğer kimsenin pointer'ı kavramını zihin de nasıl ilişkilendiriğine bağlı bir durumdur. Her iki kişi de zihnin de pointer kavramını tutarlı bir biçim de ilişkilendirmiş ama bunu birbirlerine anlatmaya çalıştıklarında örtüşmediğini fark ederler. Ama günün sonunda aslında aynı şeyden bahsediyorlardır. Özetle belki de tüm bunların sebebi ağ kavramlarının bağlamsal ve anlamsal olarak iç içe geçmesi ve tam anlamıyla bir literatür standardı oluşturulamaması durumu yüzünden her üretici (Cisco, Juniper, FRR vb.) kendi terminolojisini ve isimlendirmesini kullanıyor bu da karmaşıklığın artmasına daha da sebep oluyor.
+Bu proje de bir veri merkezi ağ altyapısının nasıl tasarlanması gerektiğinin temel pratik uygulamaları GNS3 programı ile simüle edilerek kurgu edilmesi istenmektedir. Aslında daha çok emüle etmek denilebilir. Bu sayede ağ yöneticiliği dünyası hakkında teorik olarak pek çok kavram ve yenilik edinilmiş olacak ve ayrıca pratik olarak da pek çok teknik ve çözümsel yaklaşımlar ile yeni perspektifler edinilmiş olacaktır. Teorik olarak internetin nasıl çalıştığı, özerk sistemlerin (AS) ne olduğu, ağ cihazlarının ne olduğu ve birbirleri ile olan etkileşimleri vb. örnekler verilebilir. Aynı şekilde az önce sıralanan edinimlerin pratik açıdan teknik anlam da arkaplan da nasıl çalıştığı ve nasıl dizayn edilmesi gerektiğinin öğrenilmesi hedeflenmektedir. Ancak ne olursa olsun teknik anlamda veri merkezlerinde oluşan sorunlar bizzat ve doğrudan yaşanılmadıkça bu sorunlar üzerine geliştirilen BGP EVPN, VLAN, VXLAN, VPLS, MPLS vb. teknik yaklaşımlarının tam anlamıyla anlaşılmasının zor olduğu kanaatindeyim. Bu yaklaşımlar ağ mühendisleri tarafından belirli sorunların üstesinden gelinmek amacıyla düşünülmüş ve geliştirilmiş tekniklerdir. Bu yüzden bu projenin bu tekniklerin nasıl kullanılması gerektiğini değil belirli sorunlar yaşanıldığında bu sorunların nasıl üstesinden gelinmesi gerektiğinin edinimini öğretmeyi hedeflemesi gerektiği kanaatindeyim. Bu model daha mühendissel/tekniker bir bakış açısı edinimi sağlayabilirdi. Ayrıca ağ cihazları hakkında genel kanı ev/ofis ortamlarında kullanılan cihazlar olduğundan ve veri merkezi ortamlarında bu cihazların daha geliştirilmiş versiyonları ve türleri kullanıldığından zaman zaman bazı kavramları kavramlaştırma da yanılgılara ve güçlüklere düşülebilir. Bunun çözümü için bizzat saha da olmak gerekli ve bu mümkün olamadığından belki de bu proje bu kadarını bizlere sunmuştur. Bunların yanı sıra ağ kavramları çok soyut kavramlar olduğundan öğrenildiğini düşünülen şey bir anda farklı bir bağlam da çok farklı biçim de ele alınabilir. Bu da öğrenildiğini düşünülen şey hakkında gerçekten öğrenilip öğrenilmediğine dair şüpheler oluşturabilir. Bunu izah etmek gerekirse; Multicast'i üçgen olarak öğrendiğinizi varsayın (Multicast = üçgen). Ancak Multicast'i farklı bir bağlam da ele aldığınız da aslında Multicast'in kare olduğunu öğreniyorsunuz. Daha sonra yine farklı bir bağlam da ele aldığınızda aslında Multicast yıldızmış. Tüm bunlar fark edildiğinde Multicast'in bağlamsal duruma göre hem teknik hem de ifadesel olarak esnek bir kavram olduğu sonucuna varabilirsiniz. Bu C'de pointer öğrendiğinizi zannetmenize örnek verilebilir :d. Farklı bir kimseden pointer konusunu dinlediğinizde zihninizde ki kavramla örtüşmediğini ancak pointer'ı anlatan kimsenin de çok tutarlı bir şekilde izahat de bulunduğunu fark edip hangisinin doğru olduğunun sorgulamasına düşebilirsiniz. Bu hem siz hem de diğer kimsenin pointer'ı kavramını zihin de nasıl ilişkilendiriğine bağlı bir durumdur. Her iki kişi de zihnin de pointer kavramını tutarlı bir biçim de ilişkilendirmiş ama bunu birbirlerine anlatmaya çalıştıklarında örtüşmediğini fark ederler. Ama günün sonunda aslında aynı şeyden bahsediyorlardır. Özetle belki de tüm bunların sebebi ağ kavramlarının bağlamsal ve anlamsal olarak iç içe geçmesi ve tam anlamıyla bir literatür standardı oluşturulamaması durumu yüzünden her üretici (Cisco, Juniper, FRR vb.) kendi terminolojisini ve isimlendirmesini kullanıyor bu da karmaşıklığın artmasına daha da sebep oluyor.
 
-Bu yazı da tıpkı proje dokümanında olduğu gibi bölüm bölüm ve her bölüm bir öncekinin devamı niteliğinde bir ilerleme yapılacaktır. Her bölüm de karşılaşılan sorunlar dile getirilecek ve bunlara yönelik ne gibi çözümler uygulanabileceği açıklanacaktır. Ayrıca sadece sorun - çözüm odaklı değil proje dokümanın da belirtildiği üzere incelenmesi istenilen kavramların notları da bulunmaktadır. Bu yazının kendisi de internet üzerinde ki herhangi bir kaynaktır ve burada ki açıklamaların mutlak doğru olduğu iddiası yoktur. İlk paragrafta da belirtildiği üzere benim üçgen olarak açıkladığım bir şeyi sizler kare olarak açıklayabilir ve bu çok mantıklı ve tutarlı olabilir. Tıpkı üçgenin bana mantıklı ve tutarlı hissettirmesi gibi. Ama aslında aynı şeyden bahsediyor olabiliriz yani ortada bir şekil olduğu gerçeğinden. 
+Bu proje için bu döküman yerine kaynak olarak AI LLM'ini bir "araç" gibi kullanarak (sunduğu bilgileri aksi ispatlanamaz otoritesel bilgi olarak kabul etmemek veya doğrudan projeyi ona yaptırmamak); soru-cevap şeklinde bir ilerleyiş ile tamamlanabilir. Bu döküman zaten genel olarak bu method (harici diğer kaynak araştırmaları dışında) ile ilerleyerek hazırlanmıştır. Ancak bu dökümanın okuyucuya sağladığı bazı konforlar vardır ve bunlar şunlardır; AI'ı yapılacak olan proje konusunun kapsamı bağlamında ve çerçevesinde spesifikleştirme ve sıfırdan hazırlama zahmetinden kurtarır. Ayrıca zaman zaman AI'ların halisünasyon gördükleri (yani mantıklı ve tutarlı gözüken ama pratikte hiçbir işe yaramayan yaklaşımlar sunması veya kulağı doğrudan tutmaktansa eli başın çevresinden geçirerek kulağı tutmaya benzer çözüm önerilerinde bulunması durumları) hakkında mutabıksak; bu dökümanın hazırlanışında bu durumlar ile karşılaşınılmış ve bu sorun başka kaynaklar ve AI'lar ile çifte-teyit yapılarak törpülenmeye çalışılmıştır. Bu yazı da tıpkı proje dokümanında olduğu gibi bölüm bölüm ve her bölüm bir öncekinin devamı niteliğinde bir ilerleme yapılacaktır. Her bölüm de karşılaşılan sorunlar dile getirilecek ve bunlara yönelik ne gibi çözümler uygulanabileceği açıklanacaktır. Ayrıca sadece sorun-çözüm odaklı değil proje dokümanın da belirtildiği üzere incelenmesi istenilen kavramların notları da bulunmaktadır. Bu yazının kendisi de internet üzerinde ki herhangi bir kaynaktır ve burada ki açıklamaların mutlak doğru olduğu iddiası yoktur. İlk paragrafta da belirtildiği üzere benim üçgen olarak açıkladığım bir şeyi sizler kare olarak açıklayabilir ve bu çok mantıklı ve tutarlı olabilir. Tıpkı üçgenin bana mantıklı ve tutarlı hissettirmesi gibi. Ama aslında aynı şeyden bahsediyor olabiliriz yani ortada bir şekil olduğu gerçeğinden.
 
 ## İçindekiler
   - [Part 1](#part-1)
@@ -65,8 +65,12 @@ Bu yazı da tıpkı proje dokümanında olduğu gibi bölüm bölüm ve her böl
     - [Bir ağ interface'inin detaylarını daha da fazla görme komutu](#bir-ağ-interfaceinin-detaylarını-daha-da-fazla-görme-komutu)
     - [Sanal ağ arayüzlerinin paket iletimi üzerine](#sanal-ağ-arayüzlerinin-paket-iletimi-üzerine)
     - [Bir ağ arayüzüne (eth0, eth1 vb.) birden fazla IP adresi nasıl atanabiliyor? Ve durum böyle ise o halde bir cihazın birden fazla port'unun olmasının ne anlamı ve gereği var?](#bir-ağ-arayüzüne-eth0-eth1-vb-birden-fazla-ip-adresi-nasıl-atanabiliyor-ve-durum-böyle-ise-o-halde-bir-cihazın-birden-fazla-portunun-olmasının-ne-anlamı-ve-gereği-var)
+    - [Bridge'i daha iyi anlamak için örnek bir topoloji çalışması](#bridgei-daha-iyi-anlamak-için-örnek-bir-topoloji-çalışması)
     - [Bridge ağ arayüzüne bağlı port'ların incelenmesi](#bridge-ağ-arayüzüne-bağlı-portların-incelenmesi)
     - [VXLAN'ın statik modda (unicast) veya dinamik multicast modda ayarlanması sonucunda bu modların farklari ve üstlendikleri roller](#vxlanın-statik-modda-unicast-veya-dinamik-multicast-modda-ayarlanması-sonucunda-bu-modların-farklari-ve-üstlendikleri-roller)
+    - [Proje dökümanında ki topoloji görselinde bulunan Ethernet switch cihazının neden konulduğu üzerine](#proje-dökümanında-ki-topoloji-görselinde-bulunan-ethernet-switch-cihazının-neden-konulduğu-üzerine)
+    - [Topoloji görselinde ki Ethernet switch'in bulunmasının farklı bir perspektiften yorumu](#topoloji-görselinde-ki-ethernet-switchin-bulunmasının-farklı-bir-perspektiften-yorumu)
+    - [Topoloji görselinde ki host'lara bir gateway ataması yapılmamasına rağmen paketlerin VTEP'lere nasıl ulaştığı üzerine](topoloji-görselinde-ki-hostlara-bir-gateway-ataması-yapılmamasına-rağmen-paketlerin-vteplere-nasıl-ulaştığı-üzerine)
     - [Uç cihazdan gönderilen bir paketin VXLAN yapılı ağda ki yolculuğu](#uç-cihazdan-gönderilen-bir-paketin-vxlan-yapılı-ağda-ki-yolculuğu)
   - [Part 3](#part-3)
     - [VPLS + MPLS ve BGP EVPN VXLAN'nin çözdüğü sorun](#vpls--mpls-ve-bgp-evpn-vxlannin-çözdüğü-sorun)
@@ -986,9 +990,7 @@ Host-1 ── Router-1 ══VXLAN tüneli══ Router-2 ── Host-2
 
 Topoloji IP planı:
 ```
-Host-1 tarafı → 192.168.1.0/24
 Router'lar arası → 10.0.0.0/30
-Host-2 tarafı → 192.168.2.0/24
 ```
 
 IP planı uygulandıktan ve `ping` ile iletişimin sağlandığı doğrulandıktan sonra _"Underlay"_ ağın çalıştığıyla/kurulu olduğuyla ilgili hemfikir olunabilir. VXLAN bağlamında bu fiziksel ağa _"Underlay"_ deniyor. Şimdi ise _"Overlay"_ yani VXLAN ile sanal ağ yapılandırılması için VXLAN tünelini kuracağız. Router-1'in terminalinde şu komutu çalıştır:
@@ -1114,19 +1116,13 @@ Host-2'ye de:
 ip addr add 30.1.1.2/24 dev eth0
 ```
 
-Kurgumuz her iki cihazda da `eth0` ağ arayüzünde aynı subnet'e sahip cihazların birbirlerine uzak lokasyonlarda dahi olsalar (yani aralarında internet dahi olsa) sanki aynı switch'e veya aynı lokasyondalarmış davranışını zannettirmek veya sergiletmek olduğundan her iki cihazin aynı subnet'de olduğu IP adresleri atanmalıdır. Bu şekilde arkaplanda ki VXLAN mimarisi çalışacaktır. Ve bu IP adresleri atandığı anda artık **"Overlay"** bir network'e sahip olunuyor. Underlay ağımızda zaten `192.168.1.0/24` ve `192.168.2.0/24` subnet'leri var. VXLAN tüneli üzerindeki sanal ağ tamamen ayrı bir ağ farklı bir subnet kullanarak _"bu IP'ler VXLAN üzerinden geliyor"_ diyebiliyoruz. Host-1 `(30.1.1.1)` ve Host-2 `(30.1.1.2)` aynı subnet'de `30.1.1.0/24`. Aralarında router yok, sanki aynı switch'e bağlıymış gibi. VXLAN bunu sağlıyor. Host-1'den Host-2'ye `ping` atarak "Overlay" ağın çalışıp çalışmadığı test edilebilir;
+Kurgumuz her iki cihazda da `eth0` ağ arayüzünde aynı subnet'e sahip cihazların birbirlerine uzak lokasyonlarda dahi olsalar (yani aralarında internet dahi olsa) sanki aynı switch'e veya aynı lokasyondalarmış davranışını zannettirmek veya sergiletmek olduğundan her iki cihazin aynı subnet'de olduğu IP adresleri atanmalıdır. Bu şekilde arkaplanda ki VXLAN mimarisi çalışacaktır. Ve bu IP adresleri atandığı anda artık **"Overlay"** bir network'e sahip olunuyor. VXLAN tüneli üzerindeki sanal ağ tamamen ayrı bir ağ farklı bir subnet kullanarak _"bu IP'ler VXLAN üzerinden geliyor"_ diyebiliyoruz. Host-1 `(30.1.1.1)` ve Host-2 `(30.1.1.2)` aynı subnet'de `30.1.1.0/24`. Aralarında router yok, sanki aynı switch'e bağlıymış gibi. VXLAN ve bridge bunu sağlıyor. Host-1'den Host-2'ye `ping` atarak "Overlay" ağın çalışıp çalışmadığı test edilebilir;
 
 ```
 ping 30.1.1.2
 ```
 
-Özet olarak;
-
-- Host-1 `192.168.1.0/24` ağında
-- Host-2 `192.168.2.0/24` ağında
-- Ama ikisi de `30.1.1.0/24` overlay ağında birbirini görüyor
-
-Sanki aynı switch'e bağlıymış gibi. Router'lar arası gerçek ağdan tamamen habersizler. Durumu daha da analiz etmek icin Router-1 ile Router-2 arasında ki kabloya Wireshark aç ve ping at. Wireshark'da herhangi bir frame'in (şayet paketler hedefe iletiliyor ise) içeriği incelenecek olursa paketin bir kapsül paket olduğu saptanabilir. VNI degeri, VXLAN oldugu, kaynağın aslında `10.0.0.1`'den `10.0.0.2`'ye olduğu vb. gibi detaylar Wireshark aracıyla teyit edilebilir.
+Özet olarak sanki aynı switch'e bağlıymış gibi. Durumu daha da analiz etmek için Router-1/2 ile Ethernet switch arasında ki kabloya Wireshark aç ve ping at. Wireshark'da herhangi bir frame'in (şayet paketler hedefe iletiliyor ise) içeriği incelenecek olursa paketin bir kapsül paket olduğu saptanabilir. VNI degeri, VXLAN oldugu, kaynağın aslında `10.0.0.1`'den `10.0.0.2`'ye olduğu vb. gibi detaylar Wireshark aracıyla teyit edilebilir.
 
 ### Unicast, Multicast, Broadcast nedir?
 Şu biçim de benzerlik kurarak anlatmak gerekirse; bir sınıfta öğretmen olduğunu düşün:
@@ -1321,6 +1317,33 @@ Bir ağ arayüzüne istediğin kadar IP adresi ekleyebilirsin. Bu, bu şekilde t
 
 Tek port'a atanan IP sayısı doğrudan hızı düşürmez. Darboğazı yaratan şey portun (arayüzün) fiziksel kapasitesi ve o porttan geçen toplam trafik miktarıdır. Tek bir arayüzün kapasitesi diyelim 1 Gbps. Bu arayüze ister 1 IP ver, ister 10 IP ver. Eğer toplam trafik 1 Gbps’yi aşmıyorsa sorun yok. Ama toplam trafik 1 Gbps’yi zorlamaya başlarsa, o zaman tıkanma olur. Tek portla hiç mi yapamayız? VLAN’lar ile tek portu bölüp farklı subnet’ler tanımlayabilirsin. Birden fazla IP atayabilirsin. Ama bu hâlâ; aynı fiziksel kabloya bağlıdır aynı bant genişliğini paylaşır aynı hata noktasına sahiptir. Özetle; birden fazla IP atayabilmek ile birden fazla port'a sahip olmak aslında farklı sorunları çözüyor. Tek bir porta birden fazla IP atayabilirsin ama o port hâlâ tek bir fiziksel bağlantı noktası. Şunu düşünürsek: Bir evin tek kapısı var ama o kapıya hem _"misafir girişi"_ hem _"kargo girişi"_ yazısı asarsan ne olur? Her şey yine o tek kapıdan geçmek zorunda. Bir sorun olursa her şey durur. Yani tek bir port'a birden fazla sorumluluk verilebilir ancak bir sorun oluşursa tüm işleyiş çöker. Birden fazla port'un asıl avantajları şunlar: Birincisi fiziksel izolasyon. Farklı portlar farklı fiziksel ağlara bağlanabilir. Bir port VTEP-2'ye giderken diğer port host'a gidebilir. İkincisi bant genişliği. Her port ayrı bir hat. Üçüncüsü yedeklilik bir port'da sorun oluşursa diğerleri çalışmaya devam ediyor. Birden fazla IP aynı porta atamak ise farklı bir amaç için kullanılıyor. Genellikle aynı fiziksel ağ üzerinde birden fazla rol üstlenmek için. Kısaca: Birden fazla port = farklı fiziksel bağlantılar. Birden fazla IP = aynı port üzerinde farklı roller.
 
+### Bridge'i daha iyi anlamak için örnek bir topoloji çalışması
+Herhangi bir cihaza `ip` komutları ile switch cihazı davranışı rolü kazandırılabilir. Örneğin şu topolojiyi kurgulayacak olursak;
+
+```
+Host-1 === Host-2 === Host-3
+```
+
+Host-2'nin **adapter/port** sayısını `2` yapın.
+
+IP planı;
+```
+Host-1 --> 10.0.0.1/24
+Host-3 --> 10.0.0.3/24
+```
+
+amacımız `Host-1`'den `Host-3`'e paket iletebilmek. Ping atılmaya çalışılırsa iletilemediği gözlemlenebilir. İletimin gerçekleştirilebilmesi için `Host-2` cihazına switch rolü üstlettirmeliyiz;
+
+Host-2'de;
+```
+ip link add br0 type bridge
+ip link set br0 up
+ip link set eth0 master br0
+ip link set eth1 master br0
+```
+
+Host-2'nin bir arayüz tarafı `eth0` Host-1'e diğer arayüz tarafı da `eth1` Host-3'e baktığından oluşturduğumuz `br0`'ın bir ucunu `eth0`'a diğer ucunu da `eth1` ile ilişkilendirirsek artık ping atabiliriz. Böylece Host-2 cihazımıza switch davranışı rolünü kazandırmış oluyoruz.
+
 ### Bridge ağ arayüzüne bağlı port'ların incelenmesi
 Bridge'in sanal bir switch olduğuna dair benzetme yapılmıştı. Aynı şekilde bu sanal switch'in port'lari `brctl showmacs <bridge_name>` şeklinde listelenip incelenebilir. Burada onemli bir kac noktalar mevcut;
 
@@ -1363,6 +1386,82 @@ Bu modda, VTEP'ler belirli bir VXLAN Segmenti (VNI) için ortak bir Multicast gr
 - **Öğrenme Süreci:** Paket hedefe ulaştığında, hedef VTEP cevap döner. Bu sırada kaynak VTEP, hedef MAC adresinin hangi IP'li VTEP'te olduğunu "öğrenir" ve bir sonraki iletişim artık Unicast olarak devam eder.
 
 Her iki modun da buradaki temel rolü, ağın henüz bilmediği bir hedef için **sorup soruşturma (flooding)** işlemini yönetmektir. Statik mod bunu her kapıyı tek tek çalarak yaparken, Multicast modu bir hoparlörle tüm mahalleye seslenerek yapar. Veya statik modda bir bir haberi vermek icin tek tek herkesi rehberden telefonla aramak gerekir ama multicast ile bir konfreans görüşmesi veya grup araması ile herkesi tek bir ortamda toplayıp tek seferde haber verilir. Veya belirli bir radyo frekansı ayarlayıp bu radyo yayınına herkesle beraber katılmak gibi. Burada ki **ilk kez** ibaresi önemlidir çünkü amaç hedef cihazin MAC adresini belirli bir süreliğine (geçiçi olarak) mevcut cihazın (VTEP) ARP ve MAC tablolalarına kaydetmektir. Böylece bu ilk belirsizlik durumu belirli bir süreliğine aşıldıktan sonra Unicast iletişime dönülür çünkü artık hedef cihaza yeniden paket gelirse bunun icin yeniden statik mod veya dinamik mod kullanılmayacak bunun yerine ARP ve MAC tablolarında ki MAC adresi ve rota bilgisi kullanılacak (artık bilindiğinden) böylece uygun rota oluşturulacak. Bu yuzden bahsi geçen **belirsizlik** durumu için hangi methodun (statik (unicast), dinamik (multicast)) rolleneceğinin seçimi önem arz eder. Çünkü ARP ve MAC tabloları geçici olarak adres bilgilerini tuttuklarından yeniden hedef cihazin MAC adresini öğrenebilmek için ayarlanmış olan mod yöntemini kullanarak adresi elde edecek. Bu seçiminde performans bakımından ağı yormayacak biçimde seçilmesi önemlidir. Wireshark'da multicast grubu ile ilgili işlemleri görebilmek için GNS3'de ki VTEP cihazının MAC ve ARP tablolarının `flush` edilmesi gereklidir. Bundan sonra ARP atıldığı gözlemlenebilir. Linux'da ARP ve MAC tablolarını temizlemek için `flush` komutu kullanılabilir.
+
+### Proje dökümanında ki topoloji görselinde bulunan Ethernet switch cihazının neden konulduğu üzerine
+Proje dökümanında VTEP'lerin (veya Leaf switch'lerin) bağlandığı merkezi bir Ethernet switch cihazı ağ topolojisine yerleleştirilmiştir. Ancak bunun yerine VTEP'ler doğrudan birbirlerine de bağlanabilirdi. İletişimleri bu şekilde de mümkün kılınabilirdi. Topoloji bu şekilde de kurgulanabilir ancak burada önemli bir nokta kaçırılmaktadır. Switch'in merkezi bir paket iletim/yönlendirme noktası olarak konumlandırılmasının asıl sebebi, paketlerin iletimi için maksimum hızı ve minimum eforu sarf ettirmektir. Yani Switch'i yerleştirmediğimiz alternatif senaryoda kurgumuz bir **ring topolojisi** olsaydı;
+```
+VTEP-1 -- VTEP-2
+```
+
+böyle bir kurgu az sayıda VTEP cihazı içerdiğinden hız ve performanssal olarak büyük bir kayıp fark edilmez ancak 8 tane daha VTEP cihazı ağa yerleştirilirse;
+
+```
+VTEP-1 -- VTEP-2 -- VTEP-3 -- VTEP-4 - ...VTEP-10
+```
+
+bu sefer ki güncellenen ring topolojimiz de VTEP-1 arkasında ki bir host'dan VTEP-10 arkasında ki bir host'a bir paket iletilmek istendiğinde, paket 9 hop yapması gerekecektir. Yani 9 farklı VTEP'lerden geçmesi gerekecek. Bu hem gecikme yaratır hem de her VTEP arada ki trafiği işlemek zorunda kalır. Bu da ağa gereksiz yük oluşturur. Ayrıca bir VTEP çökerse ring kırılır:
+
+```
+VTEP-1 -- VTEP-2 -- [VTEP-3 çöktü] -- VTEP-4 -- ..VTEP-10
+```
+
+VTEP-4 ve sonrası tamamen erişilemez olur. Switch ile her VTEP merkeze 1 hop mesafede, çok daha hızlı ve verimli. Tabii ring yerine çember topoljisi de kurulabilir ancak bu da switch'in hop sayısına kıyasla yine az değildir. Tamamen bunların yerine her bir VTEP her bir diğer VTEP'e doğrudan kabloyla bağlandırılabilir. Ancak bu da her VTEP'in toplam VTEP sayısının bir eksiği kadar port giriş kapasitesine sahip olması gereksinimi, kablo sayısının artmasıyla pentagram karmaşıklığının artmasına sebebiyet vermesi gibi sorunlara yol açar. Bununla da çözüme kavuşulabilir hatta buna **full-mesh fizksel bağlantı** denir. Ancak bu model yol açtığı sorunlar nedeniyle daha çok switch merkezli bir model ağ kurgularında pratik olarak tercih edilir.
+
+Full-mesh ile;
+```
+VTEP-1 ←kablo→ VTEP-2
+VTEP-1 ←kablo→ VTEP-3
+VTEP-1 ←kablo→ VTEP-4
+...
+VTEP-1 ←kablo→ VTEP-10
+```
+VTEP-1'in 9 farklı VTEP'e doğrudan bağlanması için 9 ayrı ethernet portu kullanması gerekir. Her VTEP için bu aynı.
+
+Switch ile;
+
+```
+VTEP-1 ←kablo→ Switch
+VTEP-2 ←kablo→ Switch
+...
+VTEP-10 ←kablo→ Switch
+```
+Her VTEP sadece 1 port kullanır. Switch aralarındaki trafiği yönetir.
+
+Son olarak GNS3'te bir Ethernet switch en fazla 8-9 port'lu olarak lanse edildiğinden büyük ağ kurgusu senaryolarında yetersiz kalabileceği yanılgısına düşülebilir. Ancak büyük ağ yapılarında örneğin veri merkezlerinde çok çeşitli ve çok portlu switch türleri/versiyonları bulunur. Bu sayede ağ kurgusu çok daha konforlu biçim de tasarlanabilir;
+
+```
+Ev/ofis switch → 8, 16, 24 port
+Veri merkezi → 48 port, 96 port, 128 port hatta daha fazlası
+```
+Büyük veri merkezlerinde birden fazla switch katmanlı olarak kullanılır:
+
+```
+Access layer → sunuculara bağlı switch'ler
+Distribution → access switch'leri birbirine bağlar
+Core → en üstteki omurga switch'ler
+```
+Buna 3 katmanlı ağ mimarisi deniyor.
+
+#### Topoloji görselinde ki Ethernet switch'in bulunmasının farklı bir perspektiften yorumu
+Bu topolojide ki Ethernet switch'in bu şekilde konumlandırılmasının belki başka bir sebebi de; ağı VXLAN ile yapılandırmamız sonucu elde ettiğimiz Overlay ağ, aynı subnet değerlerine sahip cihazları barındıracağından (zaten amacımız farklı lokasyonda ki yani farklı subnet değerlerine sahip cihazları aynı subnet'teymiş olduklarını zannettirmek) ekstra olarak ethernet switch ile bu Overlay ağı VLAN ile de dilimlendirebilme imkanının pedagojik açıdan vurgulanmak istenmesinden dolayı yerleştirilmiş olmasıdır. Ağı daha da büyüttüğümüzü varsayarsak (yeni VTEP ve uç cihazlar yerleştirilmesi) ve bazı cihazların diğer bazı cihazlarla iletişimi istenmiyorsa VLAN ile bunu alternatif ve ekstra olarak sağlayabiliriz. Proje dökümanı belki de tamamen pedagojik hassasiyet sebebiyle farklı bir bakış açısı kazandırmayı hedeflemesinden ötürü projeyi yapanlara bu şekilde düşünmeleri için Ethernet switch cihazını, ağ topolojisine stratejik açıdan yerleştirmiş olabilir.
+
+### Topoloji görselinde ki host'lara bir gateway ataması yapılmamasına rağmen paketlerin VTEP'lere nasıl ulaştığı üzerine
+Burada VTEP cihazlarında yapılan ayarlamalarının hangi amaçla yapıldığının bilincine varılmalı. Amacımız farklı lokasyonlarda olduğunu varsaydığımız uç cihazların aynı subnet'de olduklarını zannettirmek. Bu yüzden "gateway ataması" bu amaca hizmet etmez. Gateway atamasının amacı host cihazın kendi subnet'inden farklı bir subnet'de ki cihaza paket iletimi yapmak istediğinde bu farklı cihaz doğal olarak kendi subnet'inde bulunmadığından bu iletinin boşa düşmemesi adına kendisinden üst bir cihaza sordurtma davranışını sergilemesini sağlatmaktır ve bunun için bu ayar host'da yapılır. Bu sadece paketi Router'a yönlendirir ki Router'da o farklı subnet'e bir köprüyse paketi oraya yönlendirsin veya başka bir Router'a yönlendirsin. Görüldüğü üzere bu ayar farklı lokasyonlarda ki host'ları aynı subnet'de zannettirme davranışını sergilemiyor. Bu yüzden VTEP'lere yazılımla switch rolü üstletiyoruz. VTEP'i sanal bir switch haline büründürüyoruz. Bunu da VTEP'de **bridge** ayarı yaparak hallediyoruz. Böylece host, bir paket göndereceği zaman otomatik olarak bu paketler bu sanal switch'e Layer 2 düzeyinde yani VTEP'imize ulaşmış oluyor. VTEP yerine fiziksel bir switch konulsaydı da davranış bu şekilde olacaktı. Ancak burada normal switch'e farkla, VTEP'in bu yolla elde ettiği paketlere ekstra olarak yaptığı iş VXLAN kapsüllemesi yapmasıdır. İşte bu sayede host'lar birbirlerini aynı subnet'deymiş gibi zannediyorlar. Yani normal bir fiziksel ethernet switch senaryosunda switch dahil ona bağlı tüm cihazlar nasıl aynı subnet'deyse, bridge ayarlaması ile VTEP'lere kazandırdığımız switch rolü sayesinde her host aynı switch'e bağlı olduğunu zannederek aynı subnet'de olduğunu varsayıyor. Tüm VTEP'leri tek bir switch'miş gibi düşünebilirsiniz. Çünkü her VTEP'de ve onlara bağlı olan tüm ağda bulunan farklı lokasyonda ki host'lar için tek bir switch'miş gibi davrandırılması sağlanıyor üzerlerinde yaptığımız ayarlar neticesinde. Özetle fiziksel olarak `host → bridge (br0) → VTEP` zinciri var. Host bridge'e bağlı, bridge VTEP'in üzerinde çalışıyor;
+
+Host'un bakış açısından
+```
+"Ben 30.1.1.1'im, karşımdaki 30.1.1.2 aynı subnet'te
+doğrudan ARP atarım, gateway'e gerek yok"
+```
+
+Host gateway'e ihtiyaç duymuyor çünkü hedef aynı subnet'te görünüyor. Paketi doğrudan bridge'e gönderiyor, bridge VXLAN tüneline yönlendiriyor, karşı taraftaki bridge host'a teslim ediyor;
+
+```
+Fiziksel: Host-1 → br0 → vxlan10 → [tünel] → vxlan10 → br0 → Host-2
+Host'un gördüğü: Host-1 ←────── aynı switch ──────→ Host-2
+```
+
+VXLAN'ın yaptığı tam olarak bu. Fiziksel olarak farklı yerlerde olsalar da host'lara aynı Layer 2 ağındaymış gibi davranıyor. Gateway gerektirmiyor çünkü Layer 2 seviyesinde iletişim kuruluyor.
 
 ### Uç cihazdan gönderilen bir paketin VXLAN yapılı ağda ki yolculuğu
 **Statik Mod (Head-end Replication)**
