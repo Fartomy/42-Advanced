@@ -1274,6 +1274,51 @@ Statik   → "şu spesifik IP'ye gönder" (unicast)
 Multicast → "bu gruba gönder, kim dinliyorsa alsın" (multicast)
 ```
 
+Yani Host'larımız arası paket alışveriş akışını düşünürsek;
+
+Senaryo: Host-1 ilk kez Host-2'ye ping atacak, MAC adresi bilinmiyor.
+
+1. Host-1 ARP Request gönderiyor
+```
+"Who has 30.1.1.2? Tell 30.1.1.1"
+```
+Bu broadcast paketi bridge üzerinden VTEP-1'e ulaşıyor.
+
+2. VTEP-1 ne yapıyor?
+Hedef MAC adresi bilinmiyor — BUM trafiği. VTEP-1 bu paketi VXLAN ile kapsülleyip `239.1.1.1` multicast adresine gönderiyor:
+```
+[Dış IP: 10.0.0.1 → 239.1.1.1 | UDP: 4789 | VNI: 10 | ARP Request]
+```
+Wireshark'da **Display Filter** kısmına `ip.dst==239.1.1.1` yazılarak bu paket gözlemlenebilir.
+
+3. `239.1.1.1`'e gidince ne oluyor?
+Bu paket `239.1.1.1` grubuna üye olan tüm VTEP'lere (yani VTEP-2'ye) iletilir.
+VTEP-2'de `239.1.1.1` adresine üye olduğundan ve o adresi dinlediğinden paketi alır.  VTEP'ler `ip link add vxlan10 ... group 239.1.1.1` komutunu çalıştırınca Linux kernel otomatik olarak `IGMP` `JOIN` mesajı gönderiyor.
+Örneğin bu paketleri Wireshark'da gözlemleyebilmek için Multicast grubuna üye olan bir VTEP terminalinde;
+```
+ip link set vxlan10 down && ip link set vxlan10 up
+```
+komutunu kullanabilirsiniz. `vxlan10` interface'i `DOWN` olduğunda mevcut VTEP'in gruptan çıktığı `UNJOIN` paketi Wireshark'da gözükecek ve ardından da `UP` duruma tekrardan geçirdiğimizden `239.1.1.1` adresli multicast grubuna üye olduğunu `JOIN` paketi ile bildirecek.
+
+Ayrıca VTEP terminalinde;
+```
+ip maddr show
+```
+komutu ile de mevcut VTEP'in bir multicast grubuna üye olup olmadığı veya hangi IP'li multicast grubuna üye olduğu da gözlemlenebilir.
+
+5. VTEP-2 paketi alıyor
+VTEP-2 VXLAN başlığını soyuyor, içindeki ARP Request'i görüyor. İki şey yapıyor:
+```
+a) VTEP-1'in IP'sini ve Host-1'in MAC adresini öğreniyor
+   "Host-1'in MAC adresi 10.0.0.1 arkasında"
+b) ARP paketini Host-2'ye iletiyor
+```
+5. Host-2 ARP Reply (_30.1.1.2 benim, MAC adresim şu_ şeklinde) gönderiyor
+Bu sefer unicast. VTEP-2 Host-1'in nerede olduğunu biliyor (adım 4'te öğrendi). Doğrudan VTEP-1'e unicast VXLAN paketi gönderiyor.
+
+6. Sonra ki paket gönderimlerinde sonra multicast yok
+Artık her iki VTEP de birbirini biliyor. Sonraki tüm paketler unicast gidiyor. Aksi bir durum olmadığı müddetçe (MAC tablolarının reset'lenmesi, tabloların ageing time'larının dolması vb.) Multicast grubuna bir daha başvurulmuyor.
+
 Underlay IP'leri her iki modda da kullanılıyor statik modda açıkça yazıyorsun, multicast modda ise fiziksel ağın multicast trafiği otomatik dağıtıyor. 
 Bir multicast grubunda en fazla kaç host veya üye barındırılabiliyor? Yani bu multicast grup IP'sini dinleyen en fazla kaç cihaz olabilir? Bir limit var mı?  Teknik olarak bir multicast grubunda binlerce cihaz olabilir. Belirgin bir limit yok. Ama pratikte çok fazla VTEP aynı grupta olursa multicast trafiği artar ve ağ yükü artar. Nasıl buluşuyorlar?
 VTEP `239.1.1.1` grubuna üye oluyor. Bir paket iletmek istediğinde bu gruba gönderiyor. Aynı grupta ki tüm VTEP'ler paketi alıyor ve _"bu benim için mi?"_ diye bakıyor. Bu sayede otomatik keşif ve iletim gerçekleşiyor. `vxlan10` sanal ağ arayüzü multicast mod ile ayarlandıktan sonra bridge ayari tıpkı statik mod örneğinde olduğu gibi yapılmalıdır. Tüm bu ayarların ardından host'lara aynı subnet'de olacak biçim de IP atamaları yapıldığı taktirde `ping` ile paketlerin iletimi test edilebilir.
