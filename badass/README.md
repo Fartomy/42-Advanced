@@ -29,6 +29,7 @@ Bu proje için bu döküman yerine kaynak olarak AI LLM'ini bir "araç" gibi kul
       - [Docker konteynerlar çalıştıktan sonra içlerinde barındırılan `/gns3` klasörü ve script'leri](#docker-konteynerlar-çalıştıktan-sonra-içlerinde-barındırılan-gns3-klasörü-ve-scriptleri)
     - [Temel Ağ Kavramları](#temel-ağ-kavramları)
       - [`ip a` komutunun çıktısında gözüken ağ arayüzlerinin anlamları](#ip-a-komutunun-çıktısında-gözüken-ağ-arayüzlerinin-anlamları)
+      - [Data, Segment, Frame ve Bit nedir ve ne içerir?](data-segment-frame-ve-bit-nedir-ve-ne-içerir)
       - [Router yazılımı ne demek? Router yazılımı bir cihaza indirildiğinde ne oluyor?](#router-yazılımı-ne-demek-router-yazılımı-bir-cihaza-indirildiğinde-ne-oluyor)
       - [FRR yazilim çatısı altında ki diğer yazılımların işlevleri](#frr-yazilim-çatısı-altında-ki-diğer-yazılımların-işlevleri)
       - [Gateway Nedir?](#gateway-nedir)
@@ -66,6 +67,7 @@ Bu proje için bu döküman yerine kaynak olarak AI LLM'ini bir "araç" gibi kul
     - [Sanal ağ arayüzlerinin paket iletimi üzerine](#sanal-ağ-arayüzlerinin-paket-iletimi-üzerine)
     - [Bir ağ arayüzüne (eth0, eth1 vb.) birden fazla IP adresi nasıl atanabiliyor? Ve durum böyle ise o halde bir cihazın birden fazla port'unun olmasının ne anlamı ve gereği var?](#bir-ağ-arayüzüne-eth0-eth1-vb-birden-fazla-ip-adresi-nasıl-atanabiliyor-ve-durum-böyle-ise-o-halde-bir-cihazın-birden-fazla-portunun-olmasının-ne-anlamı-ve-gereği-var)
     - [Bridge'i daha iyi anlamak için örnek bir topoloji çalışması](#bridgei-daha-iyi-anlamak-için-örnek-bir-topoloji-çalışması)
+    - [VXLAN'ı ve Bridge'i daha iyi anlamak için örnek bir topoloji çalışması](#vxlanı-ve-bridgei-daha-iyi-anlamak-için-örnek-bir-topoloji-çalışması)
     - [Bridge ağ arayüzüne bağlı port'ların incelenmesi](#bridge-ağ-arayüzüne-bağlı-portların-incelenmesi)
     - [VXLAN'ın statik modda (unicast) veya dinamik multicast modda ayarlanması sonucunda bu modların farklari ve üstlendikleri roller](#vxlanın-statik-modda-unicast-veya-dinamik-multicast-modda-ayarlanması-sonucunda-bu-modların-farklari-ve-üstlendikleri-roller)
     - [Proje dökümanında ki topoloji görselinde bulunan Ethernet switch cihazının neden konulduğu üzerine](#proje-dökümanında-ki-topoloji-görselinde-bulunan-ethernet-switch-cihazının-neden-konulduğu-üzerine)
@@ -329,6 +331,15 @@ Script'ler için `/gns3` klasöründe ki `bin` klasörünün altında ki `busybo
 ### Temel Ağ Kavramları
 #### `ip a` komutunun çıktısında gözüken ağ arayüzlerinin anlamları
 `ip a` (veya `ip addr`) komutu mevcut cihazın **ağ arayüzlerini** gösteriyor. Şöyle ki: Fiziksel bir bilgisayarda ağ kartı var — ethernet portu, Wi-Fi kartı gibi. Bunların her biri bir ağ arayüzü. `eth0`, `eth1` bunların sanal karşılıkları/temsilleri — her biri bir ethernet portu. Bağladığın her kablo bir `eth` arayüzüne denk geliyor. `lo` ise **loopback** — fiziksel bir port değil, cihazın kendisiyle konuşması için özel bir sanal arayüz. `127.0.0.1` adresi hep buraya ait. `enp` öneki ile başlayan isimler ise daha yeni Linux sistemlerde kullanılan isimlendirme standardı — `eth0` yerine donanımın fiziksel konumuna göre isim veriliyor.
+
+### Data, Segment, Frame ve Bit nedir ve ne içerir?
+
+**Data (Layer 5 - 7)**: TCP/IP'deki uygulama katmanı, OSI'deki layer 5 - 6 ve 7'yi kapsar. Kullanıcının doğrudan etkileşime girdiği ham içeriktir. İçeriği örnek olarak bir web sayfasının HTML kodları, bir e-posta metni, bir görsel veya MP3 dosyası olabilir.
+**Segments (Layer 4)**: Ham ve tüm verinin internette daha rahat taşınabilmesi için daha küçük parçalara bölünmüş halidir (üst katmandan gelen verinin). İçeriği Port numarası, Sequence Numbers (TCP'de paketlerin karşı tarafta doğru sırayla birleştirilmesini sağlamak için), Checksum (Verinin taşıma esnasında bozulup bozulmadığını denetlemek için.) bulunur.
+**Packets (Layer 3)**: Segmentlerin üzerine IP'lerin eklendiği katmandır. Verinin hangi ip'den hangi IP'ye gideceği ve TTL bilgilerini içerir.
+**Frames (Layer 2)**: MAC adreslerinin yazıldığı katmandır.
+**Bits (Layer1)**: Fiziksel ortamda bilginin karşı tarafa iletilebilmesi için 0 ve 1'lere ayrıştığı halidir.
+
 #### Router yazılımı ne demek? Router yazılımı bir cihaza indirildiğinde ne oluyor?
 Fiziksel olarak bir router ile normal bir bilgisayar arasında aslında çok fark yok — ikisi de bir işlemci, RAM, ağ kartlarından oluşuyor. Fark şurada: **router yazılımı.**
 
@@ -1122,7 +1133,16 @@ Kurgumuz her iki cihazda da `eth0` ağ arayüzünde aynı subnet'e sahip cihazla
 ping 30.1.1.2
 ```
 
-Özet olarak sanki aynı switch'e bağlıymış gibi. Durumu daha da analiz etmek için Router-1/2 ile Ethernet switch arasında ki kabloya Wireshark aç ve ping at. Wireshark'da herhangi bir frame'in (şayet paketler hedefe iletiliyor ise) içeriği incelenecek olursa paketin bir kapsül paket olduğu saptanabilir. VNI degeri, VXLAN oldugu, kaynağın aslında `10.0.0.1`'den `10.0.0.2`'ye olduğu vb. gibi detaylar Wireshark aracıyla teyit edilebilir.
+Özet olarak sanki aynı switch'e bağlıymış gibi. Durumu daha da analiz etmek için Router-1/2 ile Ethernet switch arasında ki kabloya Wireshark aç ve ping at. Wireshark'da herhangi bir frame'in (şayet paketler hedefe iletiliyor ise) içeriği incelenecek olursa paketin bir kapsül paket olduğu saptanabilir. VNI degeri, VXLAN olduğu, kaynağın aslında `10.0.0.1`'den `10.0.0.2`'ye olduğu vb. gibi detaylar Wireshark aracıyla teyit edilebilir. Wireshark'da sadece ARP paketleri gözlemlenmek isteniyorsa;
+
+```
+arping -I <arp_paketlerinin_hangi_arayüzden_çıkış_yapacağı> <hedef_IP>
+```
+Örneğin bir Host-2'ye `arping` atılmak isteniyorsa;
+
+```
+arping -I eth0 30.1.1.2
+```
 
 ### Unicast, Multicast, Broadcast nedir?
 Şu biçim de benzerlik kurarak anlatmak gerekirse; bir sınıfta öğretmen olduğunu düşün:
@@ -1289,7 +1309,7 @@ Hedef MAC adresi bilinmiyor — BUM trafiği. VTEP-1 bu paketi VXLAN ile kapsül
 ```
 [Dış IP: 10.0.0.1 → 239.1.1.1 | UDP: 4789 | VNI: 10 | ARP Request]
 ```
-Wireshark'da **Display Filter** kısmına `ip.dst==239.1.1.1` yazılarak bu paket gözlemlenebilir.
+Cihazlarda `ip neigh flush all` komutu ile tablolar temizlenip Wireshark'da **Display Filter** kısmına `ip.dst==239.1.1.1` yazılarak bu paket gözlemlenebilir.
 
 3. `239.1.1.1`'e gidince ne oluyor?
 Bu paket `239.1.1.1` grubuna üye olan tüm VTEP'lere (yani VTEP-2'ye) iletilir.
@@ -1298,7 +1318,7 @@ VTEP-2'de `239.1.1.1` adresine üye olduğundan ve o adresi dinlediğinden paket
 ```
 ip link set vxlan10 down && ip link set vxlan10 up
 ```
-komutunu kullanabilirsiniz. `vxlan10` interface'i `DOWN` olduğunda mevcut VTEP'in gruptan çıktığı `UNJOIN` paketi Wireshark'da gözükecek ve ardından da `UP` duruma tekrardan geçirdiğimizden `239.1.1.1` adresli multicast grubuna üye olduğunu `JOIN` paketi ile bildirecek.
+komutunu kullanabilirsiniz. `vxlan10` interface'i `DOWN` olduğunda mevcut VTEP'in gruptan çıktığı `UNJOIN` paketi Wireshark'da gözükecek ve ardından da `UP` duruma tekrardan geçirdiğimizden `239.1.1.1` adresli multicast grubuna üye olduğunu `JOIN` paketi ile bildirecek. Wireshark'da bu membership paketlerinin hedef IP'si olarak `224.0.0.22` adresine gönderildiğini görebilirsiniz. Bu adres IGMPv3'te membership iletileri için özel olarak kullanılan bir IGMP multicast adresidir. Membership iletileri bu adres üzerinden bildirilir. Önce ki IGMP versiyonlarında membership iletileri için tanımlanan multicast grup adresi (bizim tanımlamamızda `239.1.1.1`) kullanılıyordu ancak yeni versiyonda bu sabit bir adres (`224.0.0.22`) üzerinden yapılacak biçim de değiştirilmiştir.
 
 Ayrıca VTEP terminalinde;
 ```
@@ -1389,8 +1409,56 @@ ip link set eth1 master br0
 
 Host-2'nin bir arayüz tarafı `eth0` Host-1'e diğer arayüz tarafı da `eth1` Host-3'e baktığından oluşturduğumuz `br0`'ın bir ucunu `eth0`'a diğer ucunu da `eth1` ile ilişkilendirirsek artık ping atabiliriz. Böylece Host-2 cihazımıza switch davranışı rolünü kazandırmış oluyoruz.
 
+### VXLAN'ı ve Bridge'i daha iyi anlamak için örnek bir topoloji çalışması
+
+Topoloji;
+```
+host-1 ── VTEP-1 ──┐
+                    ├── Switch ── VTEP-3 ── host-3
+host-2 ── VTEP-2 ──┘
+```
+
+IP planı Underlay;
+```
+VTEP-3 eth1: 10.0.0.3/24
+VTEP-3 eth1: 20.0.0.3/24
+VTEP-2 eth1: 20.0.0.2/24
+VTEP-1 eth1: 10.0.0.1/24
+```
+
+Statik modda VXLAN ayarı;
+```
+VTEP-3: vxlan10, vxlan20
+VTEP-2: vxlan20
+VTEP-1: vxlan10
+```
+
+Bridge ayarı;
+```
+VTEP-3: br0 <--> vxlan10, vxlan20, eth0
+VTEP-2: br0 <--> vxlan20, eth0
+VTEP-1: br0 <--> vxlan10, eth0
+```
+
+IP planı Overlay;
+```
+host-1 eth0: 30.0.0.1/24
+host-2 eth0: 30.0.0.2/24
+host-3 eth0: 30.0.0.3/24
+```
+
+Bu yapı da `host-1`'den `host-2`'ye ilk kez bir paket gönderilmek istendiğinde farklı `VTEP-1` ve `VTEP-2` farklı VNI'lere sahip olduğundan birbirlerine ulaşamayacağı düşünülebilir ancak `VTEP-3` her iki VNI'ye sahip olduğundan ve bridge yapılandırması her iki VNI'ye sahip paketi karşılayabilecek biçim de ayarlandığından bir köprü görevi görür;
+
+1. `host-1` ilk kez paket göndereceğinden ve `host-2`'nin MAC adresine sahip olmadığından ARP paketi oluşturur ve Flood'u başlatır.
+2. `VTEP-1` bu ARP paketini alır ve bunu `VNI 10` etiketiyle VXLAN kapsüllemesi yapar ve bunu `VTEP-3`'e iletir
+3. `VTEP-3`, `VTEP-1`'in `VNI 10` ile etiketlediği ve kapsüllediği ARP paketlerini alır (bridge'in de `VNI 10` paketlerini alabilecek şekilde yapılandırıldığından) ve bu paketi decapsulate (çözümleyip) edip bunu arkasında ki uç cihazına (host-3) iletir. Aynı zaman da amaç Flood olduğundan ve `VTEP-3` `VTEP-2`'ye de erişebildiğinden paketi `VNI 20` etiketiyle VXLAN kapsüllemesi yapıp `VTEP-2`'ye de iletir.
+4. `VTEP-2`'de aldığı paketleri çözümleyip arkasında ki uç cihaza (host-2) iletir.
+5. ARP paketleri `host-2`'ye ulaştıktan sonra `host-2` `ARP reply` oluşturarak paketin geldiği yolun tam tersi yönünde `host-1`'e cevap verir ve bu şekilde bağlantı kurulmuş olur.
+
+Bu yapı da `host-1`'in `host-2`'ye paket iletebilmesinin en önemli sebebi `VTEP-3` de ki bridge ve VXLAN konfigürasyonlarıdır.
+
 ### Bridge ağ arayüzüne bağlı port'ların incelenmesi
-Bridge'in sanal bir switch olduğuna dair benzetme yapılmıştı. Aynı şekilde bu sanal switch'in port'lari `brctl showmacs <bridge_name>` şeklinde listelenip incelenebilir. Burada onemli bir kac noktalar mevcut;
+Bridge'in sanal bir switch olduğuna dair benzetme yapılmıştı. `bridge link show` komutu ile `br0` portuna bağlı olan arayüzler/portlar görülebilir ve bu sanal switch'in port'larını `brctl showmacs <bridge_name>` şeklinde listelenip incelenebilir. Burada onemli bir kac noktalar mevcut;
 
 İlki, uzun bir müddet paket iletimi (yani ping atılmazsa) cihazların MAC adresleri listede gözükmeyecektir. Çünkü bridge MAC adreslerini dinamik olarak öğreniyor. Tıpkı gerçek bir switch gibi. Bir cihaz paket gönderince bridge _"bu MAC adresi bu porttan geliyor"_ diye tabloya yazıyor. Paket gelmezse bilmiyor.
 
