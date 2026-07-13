@@ -104,6 +104,7 @@ Bu proje için bu döküman yerine kaynak olarak AI LLM'ini bir "araç" gibi kul
     - [Bir host'un MAC adresinin BGP EVPN tablosuna kaydedilebilmesinin bir yolu da `ping` atmakdır. Kısaca bu yolla ağda aktif olduğunu göstermek. Ancak bu ARP trafiği oluşturmak demek oluyor. Biz BGP EVPN'i zaten tam da bu amaçla ARP flooding'ten kurtulmak icin kullanmıyor muyduk? Yani ARP atmadan arkaplan da (kontrol düzleminde) cihazlarin birbirlerine paket göndererek (BGP paketleri) kimin ağ da kimin ağ da olmadığını sürekli kontrol eden bir mekanizma ile MAC adresleri elde edilmiyor muydu? O halde neden yine host'dan ping atilarak ARP trafiği oluşturuluyor?](#bir-hostun-mac-adresinin-bgp-evpn-tablosuna-kaydedilebilmesinin-bir-yolu-da-ping-atmakdır-kısaca-bu-yolla-ağda-aktif-olduğunu-göstermek-ancak-bu-arp-trafiği-oluşturmak-demek-oluyor-biz-bgp-evpni-zaten-tam-da-bu-amaçla-arp-floodingten-kurtulmak-icin-kullanmıyor-muyduk-yani-arp-atmadan-arkaplan-da-kontrol-düzleminde-cihazlarin-birbirlerine-paket-göndererek-bgp-paketleri-kimin-ağ-da-kimin-ağ-da-olmadığını-sürekli-kontrol-eden-bir-mekanizma-ile-mac-adresleri-elde-edilmiyor-muydu-o-halde-neden-yine-hostdan-ping-atilarak-arp-trafiği-oluşturuluyor)
     - [Eğer ki MAC adresleri, host cihaz pasif duruma geçtiğinde BGP EVPN tablosundan siliniyorsa bu host'un MAC adresi tekrardan nasıl öğreniliyor? Çünkü VTEP'lere host'ların MAC adresleri RR cihazi aracılığıyla yansıtılıyor ama RR cihazı da bu host'un MAC adresini bilmiyorsa ne oluyor? Yani tüm ağ tarafından artık bu host'un MAC adresi bilinmiyorsa ne oluyor tekrardan bilebilmek için?](#eğer-ki-mac-adresleri-host-cihaz-pasif-duruma-geçtiğinde-bgp-evpn-tablosundan-siliniyorsa-bu-hostun-mac-adresi-tekrardan-nasıl-öğreniliyor-çünkü-vteplere-hostların-mac-adresleri-rr-cihazi-aracılığıyla-yansıtılıyor-ama-rr-cihazı-da-bu-hostun-mac-adresini-bilmiyorsa-ne-oluyor-yani-tüm-ağ-tarafından-artık-bu-hostun-mac-adresi-bilinmiyorsa-ne-oluyor-tekrardan-bilebilmek-için)
     - [OSPF, BGP vb. tüm bu yapılandırmalar için gerçek senaryolarda gerçekten tek tek her cihaza manuel konfigürasyonlar mı yapılıyor?](#ospf-bgp-vb-tüm-bu-yapılandırmalar-için-gerçek-senaryolarda-gerçekten-tek-tek-her-cihaza-manuel-konfigürasyonlar-mı-yapılıyor)
+    - [ICMPv6 Router Solicitation Keşif Paketleri](#icmpv6-router-solicitation-keşif-paketleri)
     - [OSPF ve BGP paket tipleri/cinsleri/türleri](#ospf-ve-bgp-paket-tiplericinsleritürleri)
       - [OSPF paket tipleri/cinsleri/türleri](#ospf-paket-tiplericinsleritürleri)
       - [BGP paket tipleri/cinsleri/türleri](#bgp-paket-tiplericinsleritürleri)
@@ -1669,7 +1670,7 @@ ARP → "MAC adresin nedir?" → kontrol düzlemi
 ICMP ping → gerçek veri → veri düzlemi
 ```
 
-BGP EVPN'in çözdüğü sorun da tam burada: Normal VXLAN'da VTEP bilinmeyen bir MAC için ARP flood yapıyor — tüm ağa _"bu MAC kimde?"_ diye bağırıyor. BGP EVPN ile ise bu bilgi zaten kontrol düzleminde önceden dağıtılmış — ARP flood'a gerek kalmıyor.
+BGP EVPN'in çözdüğü sorun da tam burada: Normal VXLAN'da VTEP bilinmeyen bir MAC için ARP flood yapıyor — tüm ağa _"bu MAC kimde?"_ diye bağırıyor. BGP EVPN ile ise bu bilgi zaten kontrol düzleminde önceden dağıtılmış — ARP flood'a gerek kalmıyor. BGP EVPN'nin asıl gücü önceden elde edilen bu MAC adreslerinin Leaf (VTEP) cihazlarında lokal olarak cevaplandırması işlemine yardımcı olması. Leaf cihazlarında ki "cevaplandırma" işlemi için ek bir ayar daha yapılması gerekiyor. Bu ARP Suppression'dır. Her bir Leaf cihazında ARP suppression özelliği ayarlandıktan sonra host'dan gönderilen ARP request'ine Leaf cihazı lokal olarak ARP reply üretebiliyor ve böylece flood sorununun önüne geçilebilmiş olunuyor.       
 
 ### Protokol nedir? Bir protokol nasıl tasarlanır? Ne ile tasarlanır?
 
@@ -1758,7 +1759,7 @@ Yani BGP bir uygulama protokolü. Routing bilgilerini taşımak için tasarlanm�
 
 ### BGP ve EVPN ayrı kavramlarsa VXLAN flood sorunu için mi geliştirilmişler yoksa bunlar genel bir teknik ama bu sorunu da çözebilecek mahiyette teknikler mi? Flood sorunu olmadan evvel bu teknik veya kavramlar var mıydı? Yoksa flood sorunu üzerine geliştirilmiş teknikler mi?
 
-**BGP** vardı ve eski bir protokoldü; ancak **EVPN**, tam olarak **"flood"** (BUM trafiği) ve ölçeklenebilirlik sorunlarını çözmek için BGP'nin üzerine inşa edilmiş yeni bir **BGP "uzantısı" (extension)** olarak doğdu. AS'ler arası routing protokolü.
+**BGP** vardı ve eski bir protokoldü; ancak **EVPN**, tam olarak **"flood"** (BUM trafiğini) ve ölçeklenebilirlik sorunlarını çözmek için (ARP Suppression ile birlikte kullanıldığında) BGP'nin üzerine inşa edilmiş yeni bir **BGP "uzantısı" (extension)** olarak doğdu. AS'ler arası routing protokolü.
 
 **Klasik BGP (Border Gateway Protocol)**
 İnternetin ana protokolüdür. 1980'lerden beri var. İlk görevi sadece **Layer 3 (IP) rotalarını** taşımaktı. Yani _"X IP adresine gitmek için şu yolu izle"_ derdi. Başlangıçta BGP sadece şunu yapıyordu: _"Ben AS 1'im ve şu IPv4 adres bloklarına sahibim"_ diye diğer AS'lere duyurmak. İnternet bu BGP duyurularından oluşuyor. Bir internet servis sağlayıcısı da AS olduğuna göre diğer ISS'lerle iletişim için bu protokol kullanılıyor. Bir bilgisayar Google'a bağlanabiliyorsa bu BGP sayesindedir. Router'lar Google'ın IP bloğunun hangi AS'te olduğunu BGP'den öğreniyor. Yani **sıradan BGP = AS'ler arası IPv4 rota duyurusu**. İnternetin omurgası BGP. Dünyada yaklaşık 70.000'den fazla AS var ve hepsi BGP ile birbirine bağlı. Senin paketi Google'a ulaştıran yol boyunca onlarca AS geçiyor. BGP'yi OSPF'e benzetebiliriz ancak BGP'de rota hesaplama OSPF'ten tamamen farklı. **OSPF → en kısa yolu** hesaplıyor. Matematiksel, objektif. **BGP → politik (ticari) olarak en iyi yolu hesaplıyor** ama "en iyi" çok faktöre bağlı:
@@ -1798,7 +1799,7 @@ BGP'yi özel kılan şey, **MP-BGP (Multi-Protocol BGP)** haline gelebilmesidir.
 - Veri merkezleri **L2 EVPN için MP-BGP** kullanıyor — iç ağ yapısında kullanilan teknik bizim projede yaptığımız şey.
 
 **EVPN (Ethernet VPN)**
-**EVPN** ise çok daha genç bir tekniktir (2010'ların başı). VXLAN ve benzeri teknolojilerle birlikte, veri merkezleri devasa boyutlara ulaştığında ortaya çıkan "flood" sorununa bir çözüm olarak geliştirildi. Geleneksel Layer 2 ağlarda (VPLS gibi), bir cihazın nerede olduğunu öğrenmek için **"Flood and Learn" (sel gibi yayıl ve öğren)** kullanılıyordu. Bu da 1000'lerce cihazlık ağlara büyük yük oluşturuyordu. Ağ mühendisleri: _"Biz neden Layer 2 (MAC) bilgilerini de Layer 3 (IP) rotaları gibi önceden dağıtmıyoruz? Elimizde BGP gibi devasa verileri taşıyabilen sağlam bir protokol var, MAC adreslerini de onun içine paketleyip gönderelim."_ dendi. Klasik BGP normalde IP adreslerini (prefix) taşımak için tasarlanmıştı. EVPN (Ethernet VPN) ise BGP'ye yeni bir yetenek kazandırarak, BGP paketlerinin (Update paketleri) içerisinde MAC adreslerini (IP rota bilgilerini de) birer rota gibi taşımasını sağlayan bir aile **(Address Family)** eklentisidir. Yani sadece **EVPN + VXLAN** dendiği zaman kastedilen şey **BGP paketlerinde MAC adres bilgilerinin de barındırılmasıdır.** Bunu takiben aslında EVPN demek BGP demek ancak içerisinde klasik şekilde yalnızca IP rota bilgilerini içeren şekilde değil aynı zaman da MAC adres bilgilerini içerecek biçim de formlanmış bir **BGP formu = EVPN**. Kısaca :d BPG paketinin içinde MAC adresinin de olması ve taşınması durumuna EVPN deniliyor. Ayrıca bazı ağ topolojilerinin yapılarını ifade ederken sadece **EVPN + VXLAN** veya **EVPN + MPLS** gibi kavramlar kullanılabilir ve neden **BGP + VXLAN** değilde o şekilde kullandıldığı doğallıkla sorulabilir. Bir ağ topolojisinin yapısı hakkında açıklama yaparken _"BGP kullanıyorum"_ denilirse çok geniş — hangi adres ailesi, ne için? _"EVPN kullanıyorum"_ dersen spesifik — MAC adresleri için BGP uzantısı kullanıyorum. **BGP denilirse** → genel protokol, çok amaçlı ama **BGP EVPN denilirse** →  MAC adresi taşıyan spesifik yapılandırma. Network dünyasında kavramsal bir iç içelik durumu söz konusu olduğundan şu durumlar ortaya çıkabiliyor; Aynı şeye farklı isimler veriliyor (VTEP = PE = tunnel endpoint). Her üretici kendi terminolojisini ve literatürünü kullanıyor (Cisco vs Juniper vs Linux).
+**EVPN** ise çok daha genç bir tekniktir (2010'ların başı). VXLAN ve benzeri teknolojilerle birlikte, veri merkezleri devasa boyutlara ulaştığında ortaya çıkan "flood" sorununa bir çözüm olarak geliştirildi (ARP Suppression ile birlikte kullanıldığında). Geleneksel Layer 2 ağlarda (VPLS gibi), bir cihazın nerede olduğunu öğrenmek için **"Flood and Learn" (sel gibi yayıl ve öğren)** kullanılıyordu. Bu da 1000'lerce cihazlık ağlara büyük yük oluşturuyordu. Ağ mühendisleri: _"Biz neden Layer 2 (MAC) bilgilerini de Layer 3 (IP) rotaları gibi önceden dağıtmıyoruz? Elimizde BGP gibi devasa verileri taşıyabilen sağlam bir protokol var, MAC adreslerini de onun içine paketleyip gönderelim."_ dendi. Klasik BGP normalde IP adreslerini (prefix) taşımak için tasarlanmıştı. EVPN (Ethernet VPN) ise BGP'ye yeni bir yetenek kazandırarak, BGP paketlerinin (Update paketleri) içerisinde MAC adreslerini (IP rota bilgilerini de) birer rota gibi taşımasını sağlayan bir aile **(Address Family)** eklentisidir. Yani sadece **EVPN + VXLAN** dendiği zaman kastedilen şey **BGP paketlerinde MAC adres bilgilerinin de barındırılmasıdır.** Bunu takiben aslında EVPN demek BGP demek ancak içerisinde klasik şekilde yalnızca IP rota bilgilerini içeren şekilde değil aynı zaman da MAC adres bilgilerini içerecek biçim de formlanmış bir **BGP formu = EVPN**. Kısaca :d BPG paketinin içinde MAC adresinin de olması ve taşınması durumuna EVPN deniliyor. Ayrıca bazı ağ topolojilerinin yapılarını ifade ederken sadece **EVPN + VXLAN** veya **EVPN + MPLS** gibi kavramlar kullanılabilir ve neden **BGP + VXLAN** değilde o şekilde kullandıldığı doğallıkla sorulabilir. Bir ağ topolojisinin yapısı hakkında açıklama yaparken _"BGP kullanıyorum"_ denilirse çok geniş — hangi adres ailesi, ne için? _"EVPN kullanıyorum"_ dersen spesifik — MAC adresleri için BGP uzantısı kullanıyorum. **BGP denilirse** → genel protokol, çok amaçlı ama **BGP EVPN denilirse** →  MAC adresi taşıyan spesifik yapılandırma. Network dünyasında kavramsal bir iç içelik durumu söz konusu olduğundan şu durumlar ortaya çıkabiliyor; Aynı şeye farklı isimler veriliyor (VTEP = PE = tunnel endpoint). Her üretici kendi terminolojisini ve literatürünü kullanıyor (Cisco vs Juniper vs Linux).
 
 Normal bir cihaz, diğer bir cihazın nerede olduğunu anlamak için trafiğin gelmesini bekler veya her yere sorar (Flooding). EVPN'de ise durum şöyledir:
 
@@ -1813,7 +1814,7 @@ Buna network literatüründe **Control-Plane Learning (Kontrol Düzlemi ile Öğ
 EVPN aslında BGP'nin taşıdığı bir "yük" (payload) gibidir. BGP bir kamyonsa, EVPN o kamyonun içindeki özel bir kargo tipidir. 
 - **Flood Öncesi Durum:** Eskiden MAC adreslerini öğrenmek için paketin her yere gitmesi (flood) şarttı. Çünkü bir **"kontrol merkezi"** yoktu. 
 - **EVPN Sonrası Durum:** EVPN sayesinde artık bir VTEP, arkasına yeni bir cihaz takıldığında bunu bir BGP mesajı olarak paketler. Bu mesaja _"Type-2 Route" (MAC/IP Advertisement)_ denir. Diğer tüm VTEP'lere bu bilgiyi fısıldar. 
-**Sonuç:** Artık kimsenin **"flood"** yapmasına gerek kalmaz. Çünkü her VTEP'in elinde, ağda ki her bir MAC adresinin hangi VTEP'in arkasında olduğuna dair devasa bir _"telefon rehberi"_ (BGP tablosu) oluşur. Yani EVPN, BGP'ye _"Artık sadece IP rotalarını değil, MAC adreslerini ve VXLAN bilgilerini de taşıyacaksın"_ talimatının verilmiş halidir. Yani **BGP EVPN + VXLAN** yapısının daha optimal biçimde işleyebilmesi için geliştirilmiş bir teknik/çözüm.
+**Sonuç:** Artık kimsenin **"flood"** yapmasına gerek kalmaz (ARP Suppression ile birlikte kullanıldığında). Çünkü her VTEP'in elinde, ağda ki her bir MAC adresinin hangi VTEP'in arkasında olduğuna dair devasa bir _"telefon rehberi"_ (BGP tablosu) oluşur. Yani EVPN, BGP'ye _"Artık sadece IP rotalarını değil, MAC adreslerini ve VXLAN bilgilerini de taşıyacaksın"_ talimatının verilmiş halidir. Yani **BGP EVPN + VXLAN** yapısının daha optimal biçimde işleyebilmesi için geliştirilmiş bir teknik/çözüm.
 
 ### RR/Spine/Controller cihazının ağda ki tüm Leaf'e bağlı host'ların MAC adreslerini öğrenme sorumluluğu/rolü flooding yöntemine nazaran tek bir merkeze yüklemek yine performams kaybı oluşturmaz mı?
 Ağ RR cihazı ile birlikte ağda ki diğer cihazlarin MAC adreslerini bir kere öğrendikten sonra bunu tablosuna kaydeder. Geri kalan iş ağa yeni katılma veya ağdan düşme durumlarında buna uygun olarak tablosunu güncellemektir. Önceden sorun VTEP cihazlarının ARP ile temin ettikleri ve ARP tablosuna geçici olarak kaydettikleri MAC adres bilgilerini yeniden ve sürekli olarak aynı temin methodunu uygulamasıydı. RR cihazi bunu bir kez kendi merkezinde temin edip diğer cihazlara bunun hakkında haber maksatlı dağıtma rolünü üstlendiği anda yineleme sorununu ortadan kaldırır. Çünkü leafs'ler artık önceden MAC adreslerinin bilgisine ve rota bilgisine sahip oldugundan (RR'den aldıkları bilgileri tablolarına yazdıklarından) tek yapılmasi gereken iş veri düzleminde verinin/veri trafiğinin taşınmasi işlemidir. Bu da hızlı bir işlem olduğundan büyük oranda performans kazancı elde edilir. Özetle asıl iş paket gönderilmeye niyet edildigi zaman ağda ki hedef cihazin adres bilgisini temin etmektir. Ancak bu cihazin CPU ve diğer önemli kaynaklarını harcamak demek. İşin yorucu kısmı burada yatıyor. Ancak bir kere rota bilgisi elde edildi mi tek yapılması gereken rota bilgisi himayesinde paketi göndermektir.
@@ -2154,16 +2155,9 @@ VXLAN arayüzünü VTEP'te oluşturalım. Ama bu sefer multicast veya statik mod
 
 VTEP'de:
 ```
-ip link add vxlan10 type vxlan id 10 local 1.1.1.2 nolearning dstport 4789
+ip link add vxlan10 type vxlan id 10 local 1.1.1.2 dstport 4789
 ip link set vxlan10 up
 ```
-
-- `nolearning` parametresi şu anlama geliyor - _"Bu VXLAN arayüzü MAC adreslerini veri düzleminde öğrenmesin."_ Yani normal VXLAN'da bir paket geldiğinde VTEP _"bu MAC adresi şu yerden geldi"_ diye tabloya yazıyordu — **data plane learning.** Bu flooding'e yol açıyordu. `nolearning` ile VTEP diyoruz ki: _"MAC adreslerini kendin öğrenmeyeceksin, BGP EVPN sana söyleyecek."_
-
-- `nolearning` olmadan → veri düzleminde MAC öğren (flood)
-- `nolearning` ile → kontrol düzleminde MAC öğren (BGP EVPN)
-
-İşte BGP EVPN'in farkı tam burada. Flooding yerine kontrol düzleminde önceden MAC adresini temin etmek.
 
 9. **Bridge kurulumu**
 
@@ -2279,7 +2273,7 @@ Yani tablo:
 5. Diğer VTEP'ler "bu MAC 1.1.1.2'de" biliyor
         ↓
 6. Paket gönderilecekse direkt VXLAN tüneli açılıyor
-   flood yok, gereksiz trafik yok
+   flood yok, gereksiz trafik yok (ARP Suppression ile birlikte kullanıldığında)
 ```
 
 12. **Ağa diğer VTEP'leri ekleme**
@@ -2358,7 +2352,7 @@ komutu kullanılabilir.
 
 - **yeni VTEP'de VXLAN ve bridge kurulumu;**
 ```
-ip link add vxlan10 type vxlan id 10 dstport 4789 local 1.1.1.3 nolearning
+ip link add vxlan10 type vxlan id 10 dstport 4789 local 1.1.1.3
 ip link set vxlan10 up
 ip link add br0 type bridge
 ip link set br0 up
@@ -2498,7 +2492,7 @@ write
 - `neighbor VTEP-GROUP peer-group` -- _"`VTEP-GROUP` adında bir komşu grubu oluştur"_ demek. Tek tek her VTEP için ayrı komut yazmak yerine hepsini bir grupta topluyoruz. Gruba yapılan ayar tüm üyelere uygulanıyor.
 - `neighbor VTEP-GROUP remote-as 1`-- _"Bu gruptaki tüm komşular AS 1'de"_ demek. Yani gruba katılan her VTEP iBGP komşusu olacak.
 - `neighbor VTEP-GROUP update-source lo` -- _"Bu grupta ki komşularla loopback üzerinden konuş"_ demek. Daha önce tek tek her komşu için yazıyorduk, şimdi gruba yazıyoruz.
-- `bgp listen range 1.1.1.0/24 peer-group VTEP-GROUP` -- En kritik komut bu. _"`1.1.1.0/24` bloğundan gelen BGP komşuluk isteklerini otomatik kabul et ve `VTEP-GROUP` grubuna ekle"_ demek. Yani yeni bir VTEP eklendiğinde — loopback IP'si `1.1.1.0/24` bloğunda olduğu sürece — RR'ye dokunmadan otomatik kabul ediliyor.
+- `bgp listen range 1.1.1.0/24 peer-group VTEP-GROUP` -- En kritik komut bu. _"`1.1.1.0/24` bloğundan gelen BGP komşuluk isteklerini otomatik kabul et ve `VTEP-GROUP` grubuna ekle"_ demek. RR arka planda `1.1.1.0/24` subnet'inden gelecek TCP 179 (BGP) bağlantı isteklerini kabul etmek üzere bir "dinleme (listen) havuzu" oluşturur. RR bu aşamada kendisi gidip komşuluk başlatmaz, sadece bekler (Passive Mode). Ardından örneğin yeni bir Leaf (VTEP) cihazı açtınız ve loopback adresi `1.1.1.5`. Bu yeni cihazda RR'nin IP'si yazılıp BGP başlatıldığında, yeni cihaz RR'ye doğru bir TCP el sıkışması (SYN) başlatır. RR paketi aldığında kaynağına bakar: `1.1.1.5`. _"Bu IP benim 1.1.1.0/24 havuzuma uyuyor mu?"_ diye kontrol eder. Cevap evet olduğu için TCP bağlantısının kurulmasına izin verir. Ardından dinamik olarak bu komşuyu yaratır ve ona `VTEP-GROUP` içinde tanımladığınız tüm özellikleri (AS numarası, EVPN yetenekleri, Route Reflector Client ayarları vb.) bir şablon gibi giydirir. Ek bilgi olarak `bgp listen range limit` komutu ile havuzda en fazla kaç komşu olabileceğinin değeri belirtilebilir. Örneğin `bgp listen range limit 2` denilirse RR en fazla 2 dinamik komşuya sahip olabilir. RR'de `show bgp sum` komutu ile ayarlanan limit değerinin değiştirildiği teyit edilebilir.
 - `neighbor VTEP-GROUP activate` ve `route-reflector-client` -- Grubun tüm üyeleri için EVPN aktif ve hepsi RR client'ı.
 
 VTEP'ler de yapılması gereken BGP ayarları;
@@ -2622,17 +2616,17 @@ Amazon veya Google ölçeğinde binlerce VM aynı anda başlıyor, duruyor, taş
 Flood ile öğrenme → _"bekle, paket gelsin, o zaman öğren"_
 BGP EVPN → _"paket gelmeden önce haber ver"_
 
-VM taşındığı anda VTEP-7 hemen BGP EVPN ile _"VM-1 artık bende"_ diye duyuruyor. Tüm ağ flood olmadan güncelleniyor. Bu senaryo küçük ve statik ağlar için geçerli olabilir. Örneğin proje topolojisinde böyle mini bir veri merkezi kurduğumuzdan bu yanılgıya sürekli düşmek normal. Ama veri merkezi dinamik bir yapı — sürekli değişiyor. BGP EVPN bu dinamizmi flood olmadan yönetmek için var.
+VM taşındığı anda VTEP-7 hemen BGP EVPN ile _"VM-1 artık bende"_ diye duyuruyor. Tüm ağ flood olmadan güncelleniyor. Bu senaryo küçük ve statik ağlar için geçerli olabilir. Örneğin proje topolojisinde böyle mini bir veri merkezi kurduğumuzdan bu yanılgıya sürekli düşmek normal. Ama veri merkezi dinamik bir yapı — sürekli değişiyor. BGP EVPN bu dinamizmi flood olmadan yönetmek için var (ARP Suppression ile birlikte kullanıldığında).
 ### Bir host'un MAC adresinin BGP EVPN tablosuna kaydedilebilmesinin bir yolu da `ping` atmakdır. Kısaca bu yolla ağda aktif olduğunu göstermek. Ancak bu ARP trafiği oluşturmak demek oluyor. Biz BGP EVPN'i zaten tam da bu amaçla ARP flooding'ten kurtulmak icin kullanmıyor muyduk? Yani ARP atmadan arkaplan da (kontrol düzleminde) cihazlarin birbirlerine paket göndererek (BGP paketleri) kimin ağ da kimin ağ da olmadığını sürekli kontrol eden bir mekanizma ile MAC adresleri elde edilmiyor muydu? O halde neden yine host'dan ping atilarak ARP trafiği oluşturuluyor?
 
-BGP EVPN'in ARP Flooding sorununu çözmek için tasarlandığı fikri %100 doğru. Yanlış anlaşılan ya da gözden kaçırılan kısım, bu mekanizmanın nerede çalıştığı ve nasıl işlediğidir. Bu taşları yerine oturtmak için mimariyi ikiye ayırmamız gerekiyor: **Host ile Leaf (VTEP) arası** ve **Leaf ile Leaf arası**;
+Bizim projemizde ARP suppression'nın yapılması gerektiğine dair bir ibare olmadığından bu ayar Leaf'lerde yapılmıyor. "Peki neden önceden MAC adreslerini elde ettik? diye bir soru yöneltilebilir. Bunun sebebini BGP EVPN'nin ne gibi özelliklerinin olduğuna dair bizlere bir izlenim sunmak olduğuna yoruyorum. Çünkü BGP EVPN ağ kurgusunu yaptıktan sonra Wireshark ile bir host'dan başka bir host'a paket gönderimi izlenicek olursa yine ARP flood yapıldığı gözlemlenebilir. Ayrıca proje dokümanının görsellerine baktığımızda orada da ARP flood yapıldığına dair izleri görebiliriz. Ancak BGP EVPN'in ARP Flooding sorununu çözmek için tasarlandığı fikri %100 doğru (ARP Suppression ile birlikte kullanıldığında). Yanlış anlaşılan ya da gözden kaçırılan kısım, bu mekanizmanın nerede çalıştığı ve nasıl işlediğidir. Bu taşları yerine oturtmak için mimariyi ikiye ayırmamız gerekiyor: **Host ile Leaf (VTEP) arası** ve **Leaf ile Leaf arası**;
 
 BGP EVPN host'lar üzerinde çalışmaz; BGP EVPN, uç cihazlar (Alpine host'ları) arasında çalışan bir şey değildir. Host'ların arkada dönen BGP EVPN altyapısından, Route Reflector'lardan (RR) veya VXLAN'dan zerre kadar haberi yoktur. Onlar kendilerini tamamen sıradan, düz bir fiziksel switch'e kabloyla bağlanmış bir ağ da sanırlar. Bir bilgisayarın (Host-1), başka bir bilgisayara (Host-2) paket gönderebilmesi için TCP/IP mimarisinin temel kuralı gereği karşı tarafın MAC adresini bilmesi şarttır. Host-1 normal bir bilgisayar olduğu için, ağa çıkarken her halükarda bir ARP Request (ARP İsteği) paketi üretmek zorundadır. BGP EVPN bu zorunluluğu host'un elinden alamaz. Ancak bastırabilir.
 
 BGP EVPN ARP flooding'i nasıl engeller? (ARP Suppression/Bastırma); BGP EVPN'in işleyişi, Host-1 bu ARP isteğini fırlattıktan hemen sonra başlar;
 
 - **Geleneksel Ağlarda (BGP EVPN Olmadan):** Host-1 bir ARP Request (Broadcast) fırlatır. Leaf-1 bu paketi alır, kimde olduğunu bilmediği için VXLAN tünelinin içine sokar ve ağdaki bütün VTEP cihazlarına FLOOD eder (yayınlar). Binlerce hostun sürekli ARP yayını yaptığını düşünürsen, omurga ağ çöker.
-- **BGP EVPN altyapısıyla:** Host-1 yine lokal olarak ARP Request fırlatır. Ancak Leaf-1 bu paketi aldığında onu ağa flood etmez. Çünkü Leaf-2, kendi altında ki Host-2'nin MAC ve IP adresini BGP EVPN (Route Type 2) üzerinden arka planda kontrol düzleminde (Control Plane) Leaf-1'e çoktan fırlatmıştır (RR aracılığıyla). Leaf-1 kendi BGP tablosuna bakar: _"Host-2'nin MAC adresi bende zaten kayıtlı"_ der. ARP paketinin ağda yukarı tırmanmasını engeller (ARP Suppression / ARP Bastırma), paketi yakalar ve Host-1'e bizzat kendisi Host-2 adına cevap verir (Proxy ARP). ARP paketleri Host ile lokal Leaf arasında kalır. Omurga ağda (VTEP'ler ve RR arasında) asla tek bir ARP Flooding (yayın fırtınası) yaşanmaz. Kontrol düzleminde cihazların birbirini denetlemesi işte tam olarak bu dur; ağda ki tüm cihazların adres haritası VTEP'ler arasında BGP ile önceden paylaşılır.
+- **BGP EVPN altyapısıyla:** Host-1 yine lokal olarak ARP Request fırlatır. Ancak Leaf-1 bu paketi aldığında onu ağa flood etmez (ARP Suppression ile birlikte kullanıldığında). Çünkü Leaf-2, kendi altında ki Host-2'nin MAC ve IP adresini BGP EVPN (Route Type 2) üzerinden arka planda kontrol düzleminde (Control Plane) Leaf-1'e çoktan fırlatmıştır (RR aracılığıyla). Leaf-1 kendi BGP tablosuna bakar: _"Host-2'nin MAC adresi bende zaten kayıtlı"_ der. ARP paketinin ağda yukarı tırmanmasını engeller (ARP Suppression / ARP Bastırma), paketi yakalar ve Host-1'e bizzat kendisi Host-2 adına cevap verir (Proxy ARP). ARP paketleri Host ile lokal Leaf arasında kalır. Omurga ağda (VTEP'ler ve RR arasında) asla tek bir ARP Flooding (yayın fırtınası) yaşanmaz. Kontrol düzleminde cihazların birbirini denetlemesi işte tam olarak bu dur; ağda ki tüm cihazların adres haritası VTEP'ler arasında BGP ile önceden paylaşılır.
 
 ### Eğer ki MAC adresleri, host cihaz pasif duruma geçtiğinde BGP EVPN tablosundan siliniyorsa bu host'un MAC adresi tekrardan nasıl öğreniliyor? Çünkü VTEP'lere host'ların MAC adresleri RR cihazi aracılığıyla yansıtılıyor ama RR cihazı da bu host'un MAC adresini bilmiyorsa ne oluyor? Yani tüm ağ tarafından artık bu host'un MAC adresi bilinmiyorsa ne oluyor tekrardan bilebilmek için?
 
@@ -2679,6 +2673,12 @@ Büyük ağ  → Terraform + Ansible + NetBox
 Dev ağ    → özel platformlar (Google, Amazon kendi araçlarını yazıyor)
 ```
 Bu araçlar ayrı bir uzmanlık alanı — Network Automation veya NetDevOps olarak adlandırılıyor.
+
+### ICMPv6 Router Solicitation Keşif Paketleri
+İçinde IPv6 ağ arayüzü (interface) bulunan Linux tabanlı cihazlar ağ da ilk açıldığında, arayüzlerinde IPv6 varsayılan olarak zaten mevcuttur. Bu cihazlar ağ da açılır açılmaz IPv6 arayüzü (interface) ilk kez aktif olur ve cihaz otomatik olarak ağa **IPv6 Link-Local** keşif paketi gönderir.
+
+- Amacı: Cihaz ağa bağlandığı an, _"Bu ağda beni internete veya diğer ağlara çıkış sağlayacak bir router (yönlendirici) var mı? Varsa bana kendini tanıtsın ve bu ağın IPv6 bilgilerini göndersin"_ diye bağırır.
+- Nasıl Çalışır?: Cihaz bu paketi tüm router'ların dinlediği özel bir adrese (Link-Local All-Routers Multicast adresi) gönderir. Ağdaki router bu paketi aldığında, ona cevap olarak bir Router Advertisement (RA - Yönlendirici Tanıtımı) paketi yollar.
 
 ### OSPF ve BGP paket tipleri/cinsleri/türleri
 GNS3'de BGP EVPN + VXLAN ağ yapısı kurulurken şayet RR ve VTEP'ler arası bağlantıya Wireshark açılırsa, kurulum esnasında kullanılan her OSPF ve BGP konfigürasyon komutları sonrası ağ da oluşan değişikleri Wireshark ile izlemek mümkündür. Bu sayede FRR ile çalıştırdığımız bu servislerin (ospfd, bgpd vb.) arka plan da neler yaptıkları gözlemlenebilir. Burada bu paketlerin ne oldukları, neden atıldıkları ve ne işe yaradıkları açıklanacaktır.
@@ -2774,7 +2774,7 @@ Bu **kontrol düzlemi** işlemi.
 
 VTEP-1 RR'ye bakıyor — _"`30.1.1.2`'nin MAC adresi var mı?"_
 
-**Eğer varsa** → ARP proxy devreye giriyor, VTEP-1 Host-2 adına cevap veriyor. Host-1 MAC adresini öğreniyor.
+**Eğer varsa** → ARP proxy (ARP Suppression ile birlikte kullanıldığında) devreye giriyor, VTEP-1 Host-2 adına cevap veriyor. Host-1 MAC adresini öğreniyor.
 **Eğer yoksa** → ARP flood — tüm VTEP'lere gönderiliyor. Host-2'nin bağlı olduğu VTEP-2 cevap veriyor.
 
 **4. Adım: VTEP-2 Host-2'nin MAC adresini öğreniyor**
@@ -3082,3 +3082,6 @@ Bu sayede GNS3 projesi olmasa bile birisi bu dosyalara bakarak topolojiyi yenide
 ## Kaynaklar
 - [GNS3 kurulumu ve sorunların çözümü](https://www.youtube.com/watch?v=SE--UqXLShg)
 - [GNS3 kurulumu ve sorunların çözümü metinli](https://jono-moss.github.io/post/-gns3-install-debian-27-09-2024/)
+- [BGP EVPN kurulum video - 1](https://www.youtube.com/watch?v=_DO_SEm73pQ)
+- [ARP Suppression Hakkında Video](https://www.youtube.com/watch?v=Ft62FVh_N7Q)
+- [EVPN ARP Suppression Hakkında](https://github.com/FRRouting/frr/issues/16015)
