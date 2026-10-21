@@ -15,6 +15,7 @@ CC	=	@gcc
 RM	=	@rm -rf 
 OUT	=	-o $(NAME)
 CFG	=	-Wall -Werror -Wextra
+DBG	=	-g
 
 all:	$(LIBFT) $(NAME)
 
@@ -23,7 +24,7 @@ $(LIBFT):
 
 $(NAME):  $(LIBFT) $(OBJS)
 	  @echo "$(YELLOW)>_ Compiling... [$(NAME)] $(RESET)"
-	  $(CC) $(CFG) $(OUT) $(OBJS) $(LIBFT)
+	  $(CC) $(DBG) $(CFG) $(OUT) $(OBJS) $(LIBFT)
 	  @echo "$(GREEN)>_ Finished! $(RESET)"
 
 $(BIN)/%.o: ./%.c

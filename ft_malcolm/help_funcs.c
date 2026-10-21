@@ -35,3 +35,11 @@ int	ft_symbol_cnt(char *s, char ch)
 	}
 	return c;
 }
+
+void	ft_leak_cleaner(char** v)
+{
+	int i = -1;
+	while(v[++i])
+		free(v[i]);
+	free(v);
+}
