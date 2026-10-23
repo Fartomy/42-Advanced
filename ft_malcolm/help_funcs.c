@@ -43,3 +43,22 @@ void	ft_leak_cleaner(char** v)
 		free(v[i]);
 	free(v);
 }
+
+void	ft_exit(void)
+{
+	asm("mov $60, %rax\n"
+	 	"mov $0, %rdi\n" 
+	 	"syscall");
+}
+
+void	ctrl_c(int sig)
+{
+	if(sig == SIGINT)
+	{
+		printf("\nExiting program...\n");
+		free_args();
+		close(args.sockfd);
+		sleep(1);
+		ft_exit();
+	}
+}

@@ -22,6 +22,9 @@ typedef struct s_args
 	char* src_mac;
 	char* tgt_ip;
 	char* tgt_mac;
+	char* iface_name;
+	int   sockfd;
+
 }	t_args;
 
 typedef struct etharp_frame
@@ -32,22 +35,28 @@ typedef struct etharp_frame
 
 extern t_args args;
 
-int		ft_sstrlen(char**);
-void	ft_leak_cleaner(char**);
+int			ft_sstrlen(char**);
+void		ft_leak_cleaner(char**);
+void		ft_exit(void);
+void		ctrl_c(int);
 
 // arguman funcs
-int		ft_nbr_idx_cnt(int);
-int		ip_control(char*);
-int		mac_control(char*);
-int		ft_symbol_cnt(char*, char);
-int		ordormat_control(char**);
-void	take_args(char **);
+int			ft_nbr_idx_cnt(int);
+int			ip_control(char*);
+int			mac_control(char*);
+int			ft_symbol_cnt(char*, char);
+int			ordormat_control(char**);
+int			free_args(void);
+void		take_args(char**);
 
 // net funcs
-int 	create_raw_socket(void);
-void	find_iface(char **);
-char*	ft_mac_ntoa(uint8_t *);
-int 	arp_req_unpacksniff(char *, etharp *);
-int 	wait_and_get_arp_req_pack(int, etharp *); // sniffer
+void		eth_hdr_changer(etharp*);
+int			arp_hdr_changer(etharp*);
+int 		wait_and_get_arp_req_pack(etharp*); // sniffer
+int 		arp_rep_packject(etharp*); 			// spoofer/injector
+int 		arp_req_unpacksniff(char*, etharp*);
+int			find_iface(void);
+char*		ft_mac_ntoa(uint8_t*);
+uint8_t*	ft_mac_aton(char*);
 
 #endif

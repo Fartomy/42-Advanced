@@ -114,3 +114,13 @@ void	take_args(char **avs)
 	args.tgt_ip = ft_strdup(avs[3]);
 	args.tgt_mac = ft_strdup(avs[4]);
 }
+
+int 	free_args(void)
+{
+	free(args.src_ip);
+	free(args.src_mac);
+	free(args.tgt_ip);
+	free(args.tgt_mac);
+	free(args.iface_name);
+	return 0;
+}
