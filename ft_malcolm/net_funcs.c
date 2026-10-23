@@ -40,15 +40,16 @@ char*	ft_mac_ntoa(uint8_t *mac)
 int 	arp_req_unpacksniff(char *bff, etharp *arp_f)
 {
 	uint8_t target_ip_bin[4];
+	uint8_t source_ip_bin[4];
 	char*	arpreq_mac_str;
 
 	ft_memcpy(&arp_f->eth_hdr, bff, sizeof(struct ether_header));
 	ft_memcpy(&arp_f->arp_hdr, &bff[14], sizeof(struct ether_arp));
 	if(inet_pton(AF_INET, args.tgt_ip, target_ip_bin) < 0) {printf("Inet pton error: %s\n", strerror(errno)); return 2;}
+	if(inet_pton(AF_INET, args.src_ip, source_ip_bin) < 0) {printf("Inet pton error: %s\n", strerror(errno)); return 2;}
 	arpreq_mac_str = ft_mac_ntoa(arp_f->arp_hdr.arp_sha);
-
-	if((ntohs(arp_f->arp_hdr.ea_hdr.ar_op) == 1) && (!ft_memcmp(target_ip_bin, arp_f->arp_hdr.arp_spa, 4)) && \
-	    (!ft_strncmp(args.tgt_mac, arpreq_mac_str, 6)))
+	if(((ntohs(arp_f->arp_hdr.ea_hdr.ar_op) == 1) && (!ft_memcmp(target_ip_bin, arp_f->arp_hdr.arp_spa, 4))) && \
+	  ((!ft_strncmp(args.tgt_mac, arpreq_mac_str, 6)) && (!ft_memcmp(source_ip_bin, arp_f->arp_hdr.arp_tpa, 4))))
 	{
 		free(arpreq_mac_str);
 		return 1;
@@ -112,13 +113,13 @@ uint8_t*	ft_mac_aton(char* s)
 	while(ss[++i])
 	{
 		if(ss[i][1] >= '0' && ss[i][1] <= '9')
-			low = ss[i][0] - '0';
+			low = ss[i][1] - '0';
 		else if(ss[i][1] >= 'a' && ss[i][1] <= 'f')
-			low = ss[i][0] - 'a' + 10;
+			low = ss[i][1] - 'a' + 10;
 		if(ss[i][0] >= '0' && ss[i][0] <= '9')
-			high = (ss[i][1] - '0') * 16;
+			high = (ss[i][0] - '0') * 16;
 		else if(ss[i][0] >= 'a' && ss[i][0] <= 'f')
-			high = ((ss[i][1] - 'a') + 10) * 16;
+			high = ((ss[i][0] - 'a') + 10) * 16;
 		tmp_mac[i] = high + low;
 	}
 	ft_leak_cleaner(ss);
