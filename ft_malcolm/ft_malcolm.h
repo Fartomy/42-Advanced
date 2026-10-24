@@ -24,7 +24,7 @@ typedef struct s_args
 	char* tgt_mac;
 	char* iface_name;
 	int   sockfd;
-
+	char  b_verb_key;
 }	t_args;
 
 typedef struct etharp_frame
@@ -58,5 +58,10 @@ int 		arp_req_unpacksniff(char*, etharp*);
 int			find_iface(void);
 char*		ft_mac_ntoa(uint8_t*);
 uint8_t*	ft_mac_aton(char*);
+
+// bonus funcs
+void		bonus_verbose_mode(etharp*);
+void		bonus_get_key(void);
+int 		bonus_uid_control(void);
 
 #endif

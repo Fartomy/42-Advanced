@@ -76,13 +76,15 @@ int 	wait_and_get_arp_req_pack(etharp *arp_frm) // sniffer
 		if(ctrl == 1)
 		{
 			printf("an ARP request sniffed.\n");
-			printf("	MAC address of request: ");
+			printf("\tMAC address of request: ");
 			for(int i = 0; i < 6; i++)
-				printf("\033[1;36m%02x:\033[0m", arp_frm->arp_hdr.arp_sha[i]);
-			printf("\n	IPv4 address of request: ");
+				printf("\033[36m%02x:\033[0m", arp_frm->arp_hdr.arp_sha[i]);
+			printf("\b \b\n\tIPv4 address of request: ");
 			for(int i = 0; i < 4; i++)
-		 		printf("\033[1;36m%d.\033[0m", arp_frm->arp_hdr.arp_spa[i]);
-		 	printf("\n");
+		 		printf("\033[36m%d.\033[0m", arp_frm->arp_hdr.arp_spa[i]);
+		 	printf("\b \b\n");
+		 	if(args.b_verb_key == 'V')
+		 		bonus_verbose_mode(arp_frm);
 			break;
 		}
 		else if(ctrl == 2)
